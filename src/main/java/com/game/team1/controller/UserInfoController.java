@@ -5,13 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.team1.service.UserInfoService;
+import com.game.team1.vo.MsgVO;
 import com.game.team1.vo.UserInfoVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,15 +34,16 @@ public class UserInfoController {
 		return userService.getUserInfo(uiNum);
 	}
     @PostMapping("/login")
-    public String login(UserInfoVO user, Model m, HttpSession session){
+    public MsgVO login(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
         log.info("user=>{}", user);
         UserInfoVO loginUser = userService.login(user);
-        m.addAttribute("msg", "아이디나 비번을 확인하세요");
+        msg.setMsg("아이디나 비밀번호를 확인하세요");
         if(loginUser!=null){
             session.setAttribute("user", loginUser);
-            //m
+            msg.setMsg("로그인이 성공하였습니다.");
+            msg.setUrl("/");
+            msg.setSuccess(true);
         }
-        
-        return "tmpl/user-info/login";
+        return msg;
     }
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getData(){
+            const formObjs = document.querySelectorAll('input[id], select[id], textarea[id]');
+            const data = {};
+            for(const formObj of formObjs){
+                if(formObj.type === 'radio'){
+                    if(!data[formObj.name] && document.querySelector(`[name=${formObj.name}]:checked`)){
+                        data[formObj.name] = document.querySelector(`[name=${formObj.name}]:checked`).value;
+                    }
+                }else if(formObj.type === 'checkbox'){
+                    const checkObjs = document.querySelectorAll(`[name=${formObj.name}]:checked`);
+                    const values = [];
+                    for(const checkObj of checkObjs){
+                        values.push(checkObj.value);
+                    }
+                    data[formObj.name]  = values;
+                }else if(formObj.type === 'select-multiple' ){
+                    const selectedObjs = document.querySelectorAll(`[id=${formObj.id}] option:checked`);
+                    const values = [];
+                    for(const selectedObj of selectedObjs){
+                        values.push(selectedObj.value);
+                    }
+                    data[formObj.id]  = values;
+                }
+                else{
+                    data[formObj.id] = formObj.value;
+                }
+            }
+            return data;
+        }
+        function getJsonFromData(){
+            return JSON.stringify(getData());
+        }    
+    </script>
+</head>
+<body>
+    이름 : <input type="text" id="uiName"><br>
+    아이디 : <input type="text" id="uiId"><br>
+    비밀번호 : <input type="text" id="uiPwd"><br>
+    <select multiple id="uiLikeNums">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+    <input type="radio" id="man" name="uiTrans" value="m" checked>남
+    <input type="radio" id="woman" name="uiTrans" value="f">여<br>
+    <input type="checkbox" id="movie" name="uiHobby" value="movie">영화관람
+    <input type="checkbox" id="trable" name="uiHobby" value="trable" >여행
+    <input type="checkbox" id="read" name="uiHobby" value="read">독서
+    <input type="checkbox" id="drive" name="uiHobby" value="drive">운전
+    <button onclick="join()" id="btn">회원가입</button>
+    <script>
+        async function join(){
+            const data = getJsonFromData();
+            console.log(data);
+            
+        }
+    </script>
+</body>
+</html>
