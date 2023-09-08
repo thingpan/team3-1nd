@@ -34,11 +34,23 @@
   }
 
   body {
-    background-image: url(".././imgs/background.jpg");
-    margin: 0;
-    overflow: none;
-    cursor: none;
-  }
+      background-image: url(".././imgs/background.jpg");
+      overflow: none;
+      cursor: none;
+      /* 화면 크기를 50%로 줄임 */
+      width: 50%;
+      height: 50%;
+      /* 중앙 정렬 */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* 스크롤 비활성화 */
+    }
 
   #startButton {
     display: inline-block;
