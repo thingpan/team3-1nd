@@ -1,202 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <style>
-      #colorText {
-        font-family: 'Dongle', sans-serif;
-      }
-      #point {
-        font-family: 'Jua', sans-serif;
-      }
-      </style>
-  </head>
-  
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  
   <style>
-    body {
-      background-image: url("img/background.jpg");
-    }
-    #startButton {
-      display: inline-block;
-      background-color: transparent;
-      border: none;
-    }
-    #startButton:hover {
-      cursor: pointer;
-    }
     #colorText {
-      font-size: 160px;
+      font-family: 'Dongle', sans-serif;
     }
+
     #point {
-      font-size: 80px;
-    }
-    #imgBtn {
-      display: inline-block;
-      background-color: transparent;
-      border: none;
-    }
-    table {
-      margin-top: 80px;
-      width: 500px;
-      table-layout: fixed;
+      font-family: 'Jua', sans-serif;
     }
   </style>
-  <audio id="bgm" preload="auto">
-    <source src="/lce.mp3" type="audio/mpeg">
+</head>
 
-  </audio>
-  <audio id="boingSound" preload="auto">
-    <source src="/fire.mp3" type="audio/mpeg">
- 
-  </audio>
 
-  <body>
-    <div class="custom-cursor"></div>
-    <script src="script.js"></script>
-    <div style="text-align: center">
-      <p id="colorText">두더지를 잡아라 !!!!!</p>
-    </div>
-    <div style="text-align: center"><p id="point">0</p></div>
-    <div style="text-align: center"><p id="countText">0</p></div>
-    <div id="hole" style="margin-top: 0"></div>
-    <div style="text-align: center">
-      <button id="startButton" onclick="start()">
-        <img src="img/start.png" width="150px" height="150px" />
-      </button>
-    </div>
+<style>
+  .custom-cursor {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    background-image: url('.././imgs/hamer.png');
+    background-size: cover;
+    pointer-events: none;
 
-    <script>
-      let html = "<table align='center' >";
-      let cnt = 1;
-      const arr = [];
-      let clickCount = 1; // 클릭 횟수를 추적할 변수
-      const maxClicks = 10; // 최대 클릭 횟수
-      let point = 0; // 점수
-      let currentColorValue = "";
-      let countText = 0; //라운드
+  }
 
-      for (let i = 1; i <= 2; i++) {
-        html += "<tr>";
-        for (let j = 1; j < 4; j++) {
-          html += `<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="${cnt++}" disabled="disabled"><img src="img/hole.png" /></button></td>`;
+  body {
+    background-image: url(".././imgs/background.jpg");
+    margin: 0;
+    overflow: none;
+    cursor: none;
+  }
+
+  #startButton {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+  }
+
+  #startButton:hover {
+    cursor: pointer;
+  }
+
+  #colorText {
+    font-size: 160px;
+  }
+
+  #point {
+    font-size: 80px;
+  }
+
+  #imgBtn {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+  }
+
+  table {
+    margin-top: 80px;
+    width: 500px;
+    table-layout: fixed;
+  }
+</style>
+<audio id="bgm" preload="auto">
+  <source src="/lce.mp3" type="audio/mpeg">
+
+</audio>
+<audio id="boingSound" preload="auto">
+  <source src="/fire.mp3" type="audio/mpeg">
+
+</audio>
+
+<body>
+  <div class="custom-cursor"></div>
+  <div style="text-align: center">
+    <p id="colorText">두더지를 잡아라 !!!!!</p>
+  </div>
+  <div style="text-align: center">
+    <p id="point">0</p>
+  </div>
+  <div style="text-align: center">
+    <p id="countText">0</p>
+  </div>
+  <div id="hole" style="margin-top: 0"></div>
+  <div style="text-align: center">
+    <button id="startButton" onclick="start()">
+      <img src=".././imgs/start.png" width="150px" height="150px" />
+    </button>
+  </div>
+
+  <script>
+    let html = "<table align='center' >";
+    let cnt = 1;
+    const arr = [];
+    let clickCount = 1; // 클릭 횟수를 추적할 변수
+    const maxClicks = 10; // 최대 클릭 횟수
+    let point = 0; // 점수
+    let currentColorValue = "";
+    let countText = 0; //라운드
+    const cursor = document.querySelector('.custom-cursor');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
+
+    for (let i = 1; i <= 2; i++) {
+      html += "<tr>";
+      for (let j = 1; j < 4; j++) {
+        html += `<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="${cnt++}" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>`;
+      }
+      html += "</tr>";
+    }
+    html += "</table>";
+    document.querySelector("#hole").innerHTML = html;
+
+    function changeImg() {
+      const cells = document.querySelectorAll("td");
+      let randomCellIndex = Math.floor(Math.random() * cells.length);
+      let colorRandom = Math.random() < 0.5 ? "red" : "blue";
+
+      //  이미지 변경
+      for (let i = 0; i < cells.length; i++) {
+        if (i === randomCellIndex) {
+          let colorRandom = Math.random() < 0.5 ? "red" : "blue";
+          cells[
+            i
+          ].innerHTML = `<button id="imgBtn" onclick="upMsg(this)" data-num="${randomCellIndex}" data-color="${colorRandom}"><img src=".././imgs/${colorRandom}.png"/></button>`;
+        } else {
+          cells[i].innerHTML = '<img src=".././imgs/hole.png" />';
         }
-        html += "</tr>";
       }
-      html += "</table>";
-      document.querySelector("#hole").innerHTML = html;
+    }
 
-      function changeImg() {
-        const cells = document.querySelectorAll("td");
-        let randomCellIndex = Math.floor(Math.random() * cells.length);
-        let colorRandom = Math.random() < 0.5 ? "red" : "blue";
 
-        //  이미지 변경
-        for (let i = 0; i < cells.length; i++) {
-          if (i === randomCellIndex) {
-            let colorRandom = Math.random() < 0.5 ? "red" : "blue";
-            cells[
-              i
-            ].innerHTML = `<button id="imgBtn" onclick="upMsg(this)" data-num="${randomCellIndex}" data-color="${colorRandom}"><img src="img/${colorRandom}.png"/></button>`;
-          } else {
-            cells[i].innerHTML = '<img src="img/hole.png" />';
-          }
+    function changeText() {
+      const colorTextElement = document.getElementById("colorText");
+      const textColors = ["빨간색", "파란색"];
+      const colorValues = ["red", "blue"];
+
+      const randomIndex = Math.floor(Math.random() * textColors.length);
+      const currentColor = textColors[randomIndex];
+      currentColorValue = colorValues[randomIndex];
+      colorTextElement.textContent = `${currentColor}`;
+      colorTextElement.style.color = currentColorValue;
+      countText++; //라운드
+      document.querySelector("#countText").innerHTML = countText;
+    }
+
+    // 뿅망치 사운드 재생 함수
+    function playBoingSound() {
+      var boingSound = document.getElementById("boingSound");
+      boingSound.play();
+    }
+
+    // 이미지 클릭 메소드
+    function upMsg(obj) {
+      const moleColor = obj.getAttribute("data-color");
+      const textColor = currentColorValue;
+      const cursor = document.querySelector(".custom-cursor");
+      const originalImg = obj.innerHTML;
+
+      // 다른 이미지로 변경
+      if (moleColor == "red") {
+        obj.innerHTML = `<img src=".././imgs/hit_red.png" />`;
+      } else if (moleColor == "blue") {
+        obj.innerHTML = `<img src=".././imgs/hit_blue.png" />`;
+      }
+
+      console.log(obj);
+      if (moleColor == textColor) {
+        ++point;
+        obj.disabled = true;
+        playBoingSound(); // 뿅망치 사운드 재생
+      } else {
+        --point;
+        obj.disabled = true;
+        playBoingSound();
+      }
+
+      document.querySelector("#point").innerHTML = point;
+
+      if (clickCount < maxClicks) {
+        // 클릭 횟수가 최대 횟수 미만일 때만 처리
+        console.log(clickCount);
+
+        clickCount++; // 클릭 횟수 증가
+      } else {
+        alert("게임이 종료 되었습니다! 점수는 : " + point);
+
+        location.reload(true);
+      }
+    }
+
+
+    function start() {
+      const countdownElement = document.getElementById("colorText"); // 텍스트 엘리먼트 가져오기
+      let countdown = 3; // 시작 카운트다운 시간 설정
+
+      // 3초 카운트다운 구현
+      const countdownInterval = setInterval(function () {
+        countdownElement.textContent = `${countdown}초 후 시작`; // 텍스트 업데이트
+        countdown--;
+        var bgm = document.getElementById("bgm");
+        bgm.play();
+
+        if (countdown < 0) {
+          clearInterval(countdownInterval); // 카운트다운 종료
+          countdownElement.textContent = "두더지를 잡아라!!!!!"; // 게임 시작 텍스트로 변경
+
+          // 3초 후 게임 시작
+          setInterval(function () {
+            changeImg();
+            changeText();
+          }, 1000);
+
+          clickCount = 1; // 시작할 때 클릭 횟수 초기화
         }
-      }
-      
+      }, 1000);
+    }
+  </script>
+</body>
 
-      function changeText() {
-        const colorTextElement = document.getElementById("colorText");
-        const textColors = ["빨간색", "파란색"];
-        const colorValues = ["red", "blue"];
-
-        const randomIndex = Math.floor(Math.random() * textColors.length);
-        const currentColor = textColors[randomIndex];
-        currentColorValue = colorValues[randomIndex];
-        colorTextElement.textContent = `${currentColor}`;
-        colorTextElement.style.color = currentColorValue;
-        countText++; //라운드
-        document.querySelector("#countText").innerHTML = countText;
-      }
-
-      // 뿅망치 사운드 재생 함수
-function playBoingSound() {
-  var boingSound = document.getElementById("boingSound");
-  boingSound.play();
-}
-
-// 이미지 클릭 메소드
-function upMsg(obj) {
-  const moleColor = obj.getAttribute("data-color");
-  const textColor = currentColorValue;
-  const cursor = document.querySelector(".custom-cursor");
-  const originalImg = obj.innerHTML;
-
-  // 다른 이미지로 변경
-  if (moleColor == "red") {
-    obj.innerHTML = `<img src="img/hit_red.png" />`;
-  } else if (moleColor == "blue") {
-    obj.innerHTML = `<img src="img/hit_blue.png" />`;
-  }
-
-  console.log(obj);
-  if (moleColor == textColor) {
-    ++point;
-    obj.disabled = true;
-    playBoingSound(); // 뿅망치 사운드 재생
-  } else {
-    --point;
-    obj.disabled = true;
-    playBoingSound();
-  }
-
-  document.querySelector("#point").innerHTML = point;
-
-  if (clickCount < maxClicks) {
-    // 클릭 횟수가 최대 횟수 미만일 때만 처리
-    console.log(clickCount);
-
-    clickCount++; // 클릭 횟수 증가
-  } else {
-    alert("게임이 종료 되었습니다! 점수는 : " + point);
-
-    location.reload(true);
-  }
-}
-
-
-      function start() {
-        const countdownElement = document.getElementById("colorText"); // 텍스트 엘리먼트 가져오기
-        let countdown = 3; // 시작 카운트다운 시간 설정
-
-        // 3초 카운트다운 구현
-        const countdownInterval = setInterval(function () {
-          countdownElement.textContent = `${countdown}초 후 시작`; // 텍스트 업데이트
-          countdown--;
-          var bgm = document.getElementById("bgm");
-         bgm.play();
-
-          if (countdown < 0) {
-            clearInterval(countdownInterval); // 카운트다운 종료
-            countdownElement.textContent = "두더지를 잡아라!!!!!"; // 게임 시작 텍스트로 변경
-
-            // 3초 후 게임 시작
-            setInterval(function () {
-              changeImg();
-              changeText();
-            }, 1000);
-
-            clickCount = 1; // 시작할 때 클릭 횟수 초기화
-          }
-        }, 1000);
-      }
-    </script>
-  </body>
 </html>
