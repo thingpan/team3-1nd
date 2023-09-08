@@ -46,4 +46,17 @@ public class UserInfoController {
         }
         return msg;
     }
+
+    @PostMapping("/insert")
+    public MsgVO join(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
+        log.info("user=>{}", user);
+        int joinResult = userService.insertUserInfo(user);
+        msg.setMsg("Join Failed");
+        if(joinResult!= 0){
+            msg.setMsg("Join Succed. plz Login");
+            msg.setUrl("/");
+            msg.setSuccess(true);
+        }
+        return msg;
+    }
 }

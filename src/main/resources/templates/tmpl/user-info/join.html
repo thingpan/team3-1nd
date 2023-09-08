@@ -43,24 +43,25 @@
     이름 : <input type="text" id="uiName"><br>
     아이디 : <input type="text" id="uiId"><br>
     비밀번호 : <input type="text" id="uiPwd"><br>
-    <select multiple id="uiLikeNums">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
-    <input type="radio" id="man" name="uiTrans" value="m" checked>남
-    <input type="radio" id="woman" name="uiTrans" value="f">여<br>
-    <input type="checkbox" id="movie" name="uiHobby" value="movie">영화관람
-    <input type="checkbox" id="trable" name="uiHobby" value="trable" >여행
-    <input type="checkbox" id="read" name="uiHobby" value="read">독서
-    <input type="checkbox" id="drive" name="uiHobby" value="drive">운전
+    전화번호 : <input type="text" id="uiMobile"><br>
+    이메일 : <input type="text" id="uiEmail"><br>
+    생년월일 : <input type="text" id="uiBirth"><br>
     <button onclick="join()" id="btn">회원가입</button>
     <script>
         async function join(){
             const data = getJsonFromData();
-            console.log(data);
-            
+            const res = await fetch('/insert',{
+                method: 'POST',
+                body: data,
+                headers:{
+                    'Content-Type':'application/json;charset=UTF-8'
+                }
+            })
+            const msg = await res.json();
+            alert(msg.msg);
+            if(msg.url){
+                location.href=msg.url;
+            }
         }
     </script>
 </body>

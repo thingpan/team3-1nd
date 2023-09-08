@@ -14,6 +14,7 @@
     <div th:if="${session.user} != null">
         <span th:text="${session.user.uiName}"></span>님 안녕하세요.<br>
         <ul></ul>
-    </div>
+    </div><br>
+    <button onclick="location.href='/tmpl/user-info/list'">list</button>
 </body>
 </html>
