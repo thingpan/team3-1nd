@@ -16,6 +16,13 @@
             <th>번호</th>
             <th>이름</th>
             <th>아이디</th>
+            <th>비밀번호</th>
+            <th>핸드폰 번호</th>
+            <th>이메일</th>
+            <th>생일</th>
+            <th>생성일</th>
+            <th>마지막 수정일</th>
+            <th>활성화</th>
         </tr>
         <tbody id="tBody">
         </tbody>
@@ -30,6 +37,13 @@
                 html += `<td>${user.uiNum}</td>`;
                 html += `<td>${user.uiName}</td>`;
                 html += `<td>${user.uiId}</td>`;
+                html += `<td>${user.uiPwd}</td>`;
+                html += `<td>${user.uiMobile}</td>`;
+                html += `<td>${user.uiEmail}</td>`;
+                html += `<td>${user.uiBirth}</td>`;
+                html += `<td>${user.credat}</td>`;
+                html += `<td>${user.lmodat}</td>`;
+                html += `<td>${user.active}</td>`;
                 html += '</tr>';
             }
             document.querySelector('#tBody').innerHTML = html;
