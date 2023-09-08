@@ -11,13 +11,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   
   <style>
-    #colorText {
-      font-family: 'Dongle', sans-serif;
-    }
+      #colorText {
+        font-family: 'Dongle', sans-serif;
+      }
 
-    #point {
-      font-family: 'Jua', sans-serif;
-    }
+      #point {
+        font-family: 'Jua', sans-serif;
+      }
+      html {
+      font-size: 50%;
+      }
+      /* 작은 창에서의 스타일 */
+      @media (max-width: 600px) {
+        html {
+          font-size: 100%; /* 100%로 설정하여 작은 창에서는 원래 크기로 유지합니다. */
+          max-width: 100%; /* 최대 너비를 100%로 설정하여 페이지를 확대하지 못하도록 합니다. */
+          overflow: hidden; /* 스크롤 막기 */
+        }
+      }
   </style>
 </head>
 
@@ -34,23 +45,11 @@
   }
 
   body {
-      background-image: url(".././imgs/background.jpg");
-      overflow: none;
-      cursor: none;
-      /* 화면 크기를 50%로 줄임 */
-      width: 50%;
-      height: 50%;
-      /* 중앙 정렬 */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden; /* 스크롤 비활성화 */
-    }
+    background-image: url(".././imgs/background.jpg");
+    margin: 0;
+    overflow: none;
+    cursor: none;
+  }
 
   #startButton {
     display: inline-block;
