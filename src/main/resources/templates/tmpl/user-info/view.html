@@ -6,11 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>유저리스트</h3>
-    <form>
-        <input type="text" name="uiName" placeholder="이름" th:value="${param.uiName}">
-        <button>검색</button>
-    </form>
+    <h3>View</h3>
     <table border="1">
         <tr>
             <th>번호</th>
@@ -27,15 +23,23 @@
         <tbody id="tBody">
         </tbody>
     </table>
+    <button onclick="userDelete()">Delete</button>
+    <button>Update</button>
     <script>
+        function userDelete(){
+            
+        }
         window.addEventListener('load', async function(){
-            const res = await fetch('/user-infos');
-            const users = await res.json();
-            let html = '';
-            for(const user of users){
+            const urlParams = new URL(location.href).searchParams;
+            const param = urlParams.get('uiNum');
+            const res = await fetch(`/user-infos/${param}`);
+            console.log(param)
+            const user = await res.json();
+
+            let html ='';
                 html += '<tr>';
                 html += `<td>${user.uiNum}</td>`;
-                html += `<td><a href="/tmpl/user-info/view?uiNum=${user.uiNum}">${user.uiName}</a></td>`;
+                html += `<td>${user.uiName}</td>`;
                 html += `<td>${user.uiId}</td>`;
                 html += `<td>${user.uiPwd}</td>`;
                 html += `<td>${user.uiMobile}</td>`;
@@ -45,7 +49,6 @@
                 html += `<td>${user.lmodat}</td>`;
                 html += `<td>${user.active}</td>`;
                 html += '</tr>';
-            }
             document.querySelector('#tBody').innerHTML = html;
         })
     </script>

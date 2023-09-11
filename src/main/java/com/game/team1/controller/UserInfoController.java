@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +30,8 @@ public class UserInfoController {
 		return userService.getUserInfos(user);
 	}
 	@GetMapping("/user-infos/{uiNum}")
-	public UserInfoVO getUserInfo(@PathVariable int uiNum) {
-		log.info("uiNum=>{}", uiNum);
+	public UserInfoVO getUserInfo(@PathVariable("uiNum") int uiNum) {
+		log.info("단일값 조회=>{}", userService.getUserInfo(uiNum));
 		return userService.getUserInfo(uiNum);
 	}
     @PostMapping("/login")
@@ -59,4 +60,9 @@ public class UserInfoController {
         }
         return msg;
     }
+
+    // @DeleteMapping("/delete/{uiNum}")
+    // public MsgVO delete(){
+
+    // }
 }
