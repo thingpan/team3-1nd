@@ -23,24 +23,32 @@
 
 
 <style>
+
   .custom-cursor {
+    cursor:none;
     position: fixed;
     width: 100px;
     height: 100px;
     background-image: url("[[${#httpServletRequest.contextPath}]]/imgs/hamer.png ");
     background-size: cover;
     pointer-events: none;
+    
 
   }
 
   body {
+
     background-image: url("[[${#httpServletRequest.contextPath}]]/imgs/background.jpg");
     margin: 0;
     overflow: none;
     cursor: none;
+    transition: transform 0.2s ease-in-out; /* 애니메이션 효과 설정 */
+ 
   }
+  
 
   #startButton {
+    cursor:none;
     display: inline-block;
     background-color: transparent;
     border: none;
@@ -117,7 +125,7 @@
     for (let i = 1; i <= 2; i++) {
       html += "<tr>";
       for (let j = 1; j < 4; j++) {
-        html += '<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img th:src="${/imgs/hole.png}" /></button></td>';                                        
+        html += '<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>';                                        
       }
       html += "</tr>";
     }
@@ -162,43 +170,82 @@
     }
 
     // 이미지 클릭 메소드
+    function changeText() {
+      const colorTextElement = document.getElementById("colorText");
+      const textColors = ["빨간색", "파란색"];
+      const colorValues = ["red", "blue"];
+
+      const randomIndex = Math.floor(Math.random() * textColors.length);
+      const currentColor = textColors[randomIndex];
+      currentColorValue = colorValues[randomIndex];
+      colorTextElement.textContent = `${currentColor}`;
+      colorTextElement.style.color = currentColorValue;
+      countText++; //라운드
+      document.querySelector("#countText").innerHTML = countText;
+    }
+
+    // 뿅망치 사운드 재생 함수
+    function playBoingSound() {
+      var boingSound = document.getElementById("boingSound");
+      boingSound.play();
+    }
+
     function upMsg(obj) {
-      const moleColor = obj.getAttribute("data-color");
-      const textColor = currentColorValue;
-      const cursor = document.querySelector(".custom-cursor");
-      const originalImg = obj.innerHTML;
+    const moleColor = obj.getAttribute("data-color");
+    const textColor = currentColorValue;
+    const cursor = document.querySelector(".custom-cursor");
+    const originalImg = obj.innerHTML;
 
-      // 다른 이미지로 변경
-      if (moleColor == "red") {
+    // 다른 이미지로 변경
+    if (moleColor == "red") {
         obj.innerHTML = `<img src=".././imgs/hit_red.png" />`;
-      } else if (moleColor == "blue") {
+    } else if (moleColor == "blue") {
         obj.innerHTML = `<img src=".././imgs/hit_blue.png" />`;
-      }
+    }
 
-      console.log(obj);
-      if (moleColor == textColor) {
+    console.log(obj);
+    
+    if (moleColor == textColor) {
         ++point;
         obj.disabled = true;
         playBoingSound(); // 뿅망치 사운드 재생
-      } else {
+   
+        const cursor = document.querySelector('.custom-cursor');
+
+        cursor.style.transform = 'rotate(270deg)';
+
+// 1초 후에 망치를 다시 0도로 회전하여 올리는 애니메이션
+setTimeout(() => {
+  cursor.style.transform = 'rotate(0deg)';
+}, 500)
+    } else {
         --point;
         obj.disabled = true;
         playBoingSound();
-      }
+        
+        const cursor = document.querySelector('.custom-cursor');
 
-      document.querySelector("#point").innerHTML = point;
+cursor.style.transform = 'rotate(270deg)';
 
-      if (clickCount < maxClicks) {
+// 1초 후에 망치를 다시 0도로 회전하여 올리는 애니메이션
+setTimeout(() => {
+cursor.style.transform = 'rotate(0deg)';
+}, 500)
+    }
+
+    document.querySelector("#point").innerHTML = point;
+
+    if (clickCount < maxClicks) {
         // 클릭 횟수가 최대 횟수 미만일 때만 처리
         console.log(clickCount);
 
         clickCount++; // 클릭 횟수 증가
-      } else {
+    } else {
         alert("게임이 종료 되었습니다! 점수는 : " + point);
 
         location.reload(true);
-      }
     }
+}
 
 
     function start() {
