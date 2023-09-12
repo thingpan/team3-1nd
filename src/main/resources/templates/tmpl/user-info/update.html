@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Update <br />
+    이름 : <input type="text" id="uiName" /><br />
+    아이디 : <input type="text" id="uiId" /><br />
+    비밀번호 : <input type="text" id="uiPwd" /><br />
+    전화번호 : <input type="text" id="uiMobile" /><br />
+    이메일 : <input type="text" id="uiEmail" /><br />
+    생년월일 : <input type="text" id="uiBirth" /><br />
+
+    <button onclick="userUpdate()">Update</button>
+    <script>
+      const urlParams = new URL(location.href).searchParams;
+      const param = urlParams.get("uiNum");
+      window.addEventListener("load", async function () {
+        const res = await fetch(`/user-infos/${param}`);
+        const user = await res.json();
+
+        for (const userInfo in user) {
+          if(document.querySelector( '#'+`${userInfo}`)){
+          document.querySelector( '#'+`${userInfo}`).value = user[userInfo];
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
