@@ -39,7 +39,7 @@
 		UI_MOBILE=#{uiMobile},
 		UI_EMAIL=#{uiEmail},
 		UI_BIRTH=#{uiBirth},
-		LMODAT=DATA_FORMAT(NOW(),'%Y%m%d')
+		LMODAT=DATE_FORMAT(NOW(),'%Y%m%d')
 		WHERE UI_NUM=#{uiNum}
 	</update>
 	<delete id="deleteUserInfo">

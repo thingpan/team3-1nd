@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,9 +51,9 @@ public class UserInfoController {
 
     @PostMapping("/insert")
     public MsgVO join(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
-        int joinResult = userService.insertUserInfo(user);
+        int result = userService.insertUserInfo(user);
         msg.setMsg("Join Failed");
-        if(joinResult!= 0){
+        if(result!= 0){
             msg.setMsg("Join Succed. plz Login");
             msg.setUrl("/");
             msg.setSuccess(true);
@@ -62,10 +63,23 @@ public class UserInfoController {
 
     @DeleteMapping("/delete/{uiNum}")
     public MsgVO delete(@PathVariable int uiNum, MsgVO msg){
-        int joinResult = userService.deleteUserInfo(uiNum);
-        msg.setMsg("Join Failed");
-        if(joinResult!= 0){
+        int result = userService.deleteUserInfo(uiNum);
+        msg.setMsg("Delete Failed");
+        if(result!= 0){
             msg.setMsg("Delete Succed.");
+            msg.setUrl("/");
+            msg.setSuccess(true);
+        }
+        return msg;
+    }
+
+    @PutMapping("/update")
+    public MsgVO update(@RequestBody UserInfoVO user, MsgVO msg){
+        log.info("넘어오는지 확인 =>{}",user);
+        int result = userService.updateUserInfo(user);
+        msg.setMsg("Update Failed");
+        if(result!= 0){
+            msg.setMsg("Update Succed.");
             msg.setUrl("/");
             msg.setSuccess(true);
         }
