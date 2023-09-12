@@ -59,7 +59,7 @@
       async function userUpdate(){
             const data = getJsonFromData();
             const res = await fetch('/update',{
-                method: 'PUT',
+                method: 'PATCH',
                 body: data,
                 headers:{
                     'Content-Type':'application/json;charset=UTF-8'

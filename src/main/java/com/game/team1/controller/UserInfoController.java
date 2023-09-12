@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,7 +74,7 @@ public class UserInfoController {
         return msg;
     }
 
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public MsgVO update(@RequestBody UserInfoVO user, MsgVO msg){
         log.info("넘어오는지 확인 =>{}",user);
         int result = userService.updateUserInfo(user);
