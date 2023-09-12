@@ -50,7 +50,6 @@ public class UserInfoController {
 
     @PostMapping("/insert")
     public MsgVO join(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
-        log.info("user=>{}", user);
         int joinResult = userService.insertUserInfo(user);
         msg.setMsg("Join Failed");
         if(joinResult!= 0){
@@ -61,8 +60,15 @@ public class UserInfoController {
         return msg;
     }
 
-    // @DeleteMapping("/delete/{uiNum}")
-    // public MsgVO delete(){
-
-    // }
+    @DeleteMapping("/delete/{uiNum}")
+    public MsgVO delete(@PathVariable int uiNum, MsgVO msg){
+        int joinResult = userService.deleteUserInfo(uiNum);
+        msg.setMsg("Join Failed");
+        if(joinResult!= 0){
+            msg.setMsg("Delete Succed.");
+            msg.setUrl("/");
+            msg.setSuccess(true);
+        }
+        return msg;
+    }
 }

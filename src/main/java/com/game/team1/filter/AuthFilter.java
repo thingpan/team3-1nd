@@ -30,7 +30,7 @@ public class AuthFilter extends GenericFilterBean {
 	private List<String> execludeUrls =new ArrayList<>();
 	{
 		execludeUrls.add("/tmpl/user-info/login");
-        execludeUrls.add("/tmpl/user-info/join");
+        execludeUrls.add("/tmpl/user-info/insert");
 		execludeUrls.add("/");
         execludeUrls.add("/login");
         execludeUrls.add("/insert");

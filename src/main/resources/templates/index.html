@@ -9,7 +9,7 @@
     안녕하세요 타임리프입니다.
     <div th:if="${session.user} == null">
         <a href="/tmpl/user-info/login">로그인</a>
-        <a href="/tmpl/user-info/join">회원가입</a>
+        <a href="/tmpl/user-info/insert">회원가입</a>
     </div>
     <div th:if="${session.user} != null">
         <span th:text="${session.user.uiName}"></span>님 안녕하세요.<br>
