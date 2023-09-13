@@ -13,14 +13,14 @@
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <canvas id="gameCanvas" width="1300" height="1000"></canvas>
     <button id="startButton">시작</button>
     <div id="timer">시간: 0</div>
     <script>
-        const canvas = document.getElementById('gameCanvas');
+        const canvas = document.querySelector('#gameCanvas');
         const ctx = canvas.getContext('2d');
-        const startButton = document.getElementById('startButton');
-        const timerElement = document.getElementById('timer');
+        const startButton = document.querySelector('#startButton');
+        const timerElement = document.querySelector('#timer');
         let gameInterval;
         let startTime;
         let elapsedTime = 0;
@@ -29,7 +29,6 @@
 
         function gameLoop() {
       
-
             // 시간 업데이트
             if (startTime) {
                 const currentTime = new Date().getTime();
