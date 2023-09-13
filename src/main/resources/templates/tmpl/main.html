@@ -100,6 +100,8 @@
     </button>
   </div>
 
+  
+
   <script>
     let html = "<table align='center' >";
     let cnt = 1;
@@ -110,6 +112,7 @@
     let currentColorValue = "";
     let countText = 0; //라운드
     const cursor = document.querySelector('.custom-cursor');
+
 
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = `${e.clientX}px`;
@@ -235,8 +238,8 @@
 
         clickCount++; // 클릭 횟수 증가
       } else {
+        sendObj();
         alert("게임이 종료 되었습니다! 점수는 : " + point);
-
         location.reload(true);
       }
     }
@@ -267,6 +270,30 @@
         }
       }, 1000);
     }
+
+    async function sendObj() {
+          const data = {
+            uiNum: '[[${session.user.uiNum}]]',
+            giNum:'[[${param.giNum}]]',
+            piPoint: point
+          }
+          console.log(data)
+          const json = JSON.stringify(data);
+          const res = await fetch(`/game-insert`, {
+            method: "POST",
+            body: json,
+            headers: {
+              "Content-Type": "application/json;charset=UTF-8",
+            },
+          });
+          const msg = await res.json();
+          alert(msg.msg);
+          if (msg.url) {
+            location.href = msg.url;
+
+          }
+        }
+
   </script>
 </body>
 

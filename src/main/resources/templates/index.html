@@ -13,7 +13,7 @@
     </div>
     <div th:if="${session.user} != null">
         <span th:text="${session.user.uiName}"></span>님 안녕하세요.<br>
-        <a href = "/tmpl/main">두더지 잡기</a>
+        <a href = "/tmpl/main?giNum=1">두더지 잡기</a>
         <ul></ul>
     </div><br>
     <button onclick="location.href='/tmpl/user-info/list'">list</button>
