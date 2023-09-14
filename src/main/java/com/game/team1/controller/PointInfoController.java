@@ -44,7 +44,6 @@ public class PointInfoController {
     }
       @GetMapping("/point-infos/rank")
     public List<PointInfoVO> getPointInfoRank(PointInfoVO point){
-        point.setGiNum(0);
         return pointInfoService.selectPointRank(point);
     }
         
