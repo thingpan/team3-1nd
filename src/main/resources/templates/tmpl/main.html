@@ -279,7 +279,7 @@
           }
           console.log(data)
           const json = JSON.stringify(data);
-          const res = await fetch(`/game-insert`, {
+          const res = await fetch(`/game-infos`, {
             method: "POST",
             body: json,
             headers: {

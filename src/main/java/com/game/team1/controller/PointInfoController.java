@@ -22,7 +22,7 @@ public class PointInfoController {
     @Autowired
     PointInfoService pointInfoService;
 
-    @PostMapping("/game-insert")
+    @PostMapping("/game-infos")
     public MsgVO insertPointInfo(@RequestBody PointInfoVO point, MsgVO msg) {
         int result = pointInfoService.insertPointInfo(point);
         msg.setMsg("점수 등록 실패!");
@@ -37,7 +37,8 @@ public class PointInfoController {
     public PointInfoVO getMaxPointInfoVO(PointInfoVO point,HttpSession session){
         UserInfoVO user =(UserInfoVO)session.getAttribute("user");
         point.setUiNum(user.getUiNum());
-        return pointInfoService.selectMaxPoint(null);
+        
+        return pointInfoService.selectMaxPoint(point);
     }
     
 }
