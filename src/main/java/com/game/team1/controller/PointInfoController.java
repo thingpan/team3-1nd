@@ -18,7 +18,6 @@ import com.game.team1.vo.UserInfoVO;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 public class PointInfoController {
     @Autowired
@@ -28,26 +27,25 @@ public class PointInfoController {
     public MsgVO insertPointInfo(@RequestBody PointInfoVO point, MsgVO msg) {
         int result = pointInfoService.insertPointInfo(point);
         msg.setMsg("점수 등록 실패!");
-        if(result != 0){
+        if (result != 0) {
             msg.setMsg("점수 등록 성공!");
             msg.setUrl("/");
             msg.setSuccess(true);
         }
         return msg;
     }
+
     @GetMapping("/point-infos/max")
-    public PointInfoVO getMaxPointInfoVO(PointInfoVO point,HttpSession session){
-        UserInfoVO user =(UserInfoVO)session.getAttribute("user");
+    public PointInfoVO getMaxPointInfoVO(PointInfoVO point, HttpSession session) {
+        UserInfoVO user = (UserInfoVO) session.getAttribute("user");
         point.setUiNum(user.getUiNum());
-        
         return pointInfoService.selectMaxPoint(point);
     }
-      @GetMapping("/point-infos/rank")
-    public List<PointInfoVO> getPointInfoRank(PointInfoVO point){
+
+    @GetMapping("/point-infos/rank")
+    public List<PointInfoVO> getPointInfoRank(PointInfoVO point) {
         point.setGiNum(0);
         return pointInfoService.selectPointRank(point);
     }
-        
-      
- 
+
 }
