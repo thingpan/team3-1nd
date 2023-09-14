@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.game.team1.service.PointInfoService;
 import com.game.team1.vo.MsgVO;
 import com.game.team1.vo.PointInfoVO;
+import com.game.team1.vo.UserInfoVO;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,8 +33,10 @@ public class PointInfoController {
         }
         return msg;
     }
-    @GetMapping("/point-infos/max/{giNum}")
-    public PointInfoVO getMaxPointInfoVO(@PathVariable int giNum,HttpSession session){
+    @GetMapping("/point-infos/max")
+    public PointInfoVO getMaxPointInfoVO(PointInfoVO point,HttpSession session){
+        UserInfoVO user =(UserInfoVO)session.getAttribute("user");
+        point.setUiNum(user.getUiNum());
         return pointInfoService.selectMaxPoint(null);
     }
     
