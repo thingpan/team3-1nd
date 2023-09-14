@@ -9,5 +9,5 @@ public interface PointInfoMapper {
 
     PointInfoVO selectMaxPoint(PointInfoVO point);
 
-    List<PointInfoVO>selectPointRank(int giNum);
+    List<PointInfoVO>selectPointRank(PointInfoVO point);
 }
