@@ -1,5 +1,7 @@
 package com.game.team1.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,8 @@ public class PointInfoService {
     }
     public PointInfoVO selectMaxPoint(PointInfoVO point){
         return pointInfoMapper.selectMaxPoint(point);
+    }
+    public List<PointInfoVO> selectPointRank(int giNum ){
+        return pointInfoMapper.selectPointRank(giNum);
     }
 }

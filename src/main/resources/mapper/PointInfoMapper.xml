@@ -10,4 +10,12 @@
         WHERE UI_NUM=#{uiNum}
         AND GI_NUM=#{giNum}
     </select>
+     <select id="selectPointRank" resultType="com.game.team1.vo.PointInfoVO">
+     SELECT * PI.*,GI.GI_NAME,UI.UI_NAME FROM POINT_INFO PI
+    LEFT JOIN GAME_INFO GI ON PI.GI_NUM =GI.GI_NUM
+    LEFT JOIN USER_INFO UI ON PI.UI_NUM =UI.UI_NUM
+    WHERE PI.GI_NUM=#{giNum}
+    ORDER BY PI.PI_POINT DESC
+    LIMIT 10;
+</select>
 </mapper>
