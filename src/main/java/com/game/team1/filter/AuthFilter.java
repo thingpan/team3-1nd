@@ -20,7 +20,7 @@ import com.game.team1.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 
-@WebFilter(value ={"/","/tmpl/**/*"})
+@WebFilter(value ={"/","/tmpl/**"})
 @Slf4j
 @Component
 
