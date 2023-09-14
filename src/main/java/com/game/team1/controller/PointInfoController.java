@@ -35,14 +35,14 @@ public class PointInfoController {
         return msg;
     }
 
-    @GetMapping("/point-infos/max")
+    @GetMapping("/point-infos/max")//그 게임에 대해 나의 베스트 점수 
     public PointInfoVO getMaxPointInfoVO(PointInfoVO point, HttpSession session) {
         UserInfoVO user = (UserInfoVO) session.getAttribute("user");
         point.setUiNum(user.getUiNum());
         return pointInfoService.selectMaxPoint(point);
     }
 
-    @GetMapping("/point-infos/rank")
+    @GetMapping("/point-infos/rank")//1위부터 10위까지 게임에 대한 점수 별로 정렬 
     public List<PointInfoVO> getPointInfoRank(PointInfoVO point) {
         return pointInfoService.selectPointRank(point);
     }
