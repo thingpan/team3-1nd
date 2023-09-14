@@ -13,4 +13,7 @@ public class PointInfoService {
     public int insertPointInfo(PointInfoVO point){
         return pointInfoMapper.insertPointInfo(point);
     }
+    public PointInfoVO selectMaxPoint(PointInfoVO point){
+        return pointInfoMapper.selectMaxPoint(point);
+    }
 }
