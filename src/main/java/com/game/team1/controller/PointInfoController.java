@@ -1,5 +1,7 @@
 package com.game.team1.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
@@ -40,5 +42,12 @@ public class PointInfoController {
         
         return pointInfoService.selectMaxPoint(point);
     }
-    
+      @GetMapping("/point-infos/rank")
+    public List<PointInfoVO> getPointInfoRank(PointInfoVO point){
+        point.setGiNum(0);
+        return pointInfoService.selectPointRank(point);
+    }
+        
+      
+ 
 }
