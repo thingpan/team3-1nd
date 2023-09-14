@@ -50,7 +50,7 @@
     <script>
         async function join(){
             const data = getJsonFromData();
-            const res = await fetch('/insert',{
+            const res = await fetch('/user-infos',{
                 method: 'POST',
                 body: data,
                 headers:{

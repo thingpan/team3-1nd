@@ -49,7 +49,7 @@ public class UserInfoController {
         return msg;
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/user-infos")
     public MsgVO join(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
         int result = userService.insertUserInfo(user);
         msg.setMsg("Join Failed");
