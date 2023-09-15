@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +11,14 @@
             display: block;
             margin: 0 auto;
         }
-        
     </style>
 
 </head>
+
 <body>
     <canvas id="gameCanvas" width="1300" height="1000"></canvas>
-    <button id="startButton"  onclick="start()">
-        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
+    <button id="startButton" onclick="start()">
+        <img th:src="@{/imgs/start.png}" width="150px" height="150px">
     </button>
     <div id="timer">시간: 0</div>
     <script>
@@ -25,21 +26,37 @@
 
         const canvas = document.querySelector('#gameCanvas');
         const ctx = canvas.getContext('2d');
-        
-        function loadImg(){
-            bulletImg  = new Image();
-            bulletImg.src = "./../imgs/bullet2.png";
+        let balls = []
+        var ballRadius = 10;
+        var x = canvas.width / 2;
+        var y = canvas.height - 30;
+        var dx = 2;
+        var dy = -2;
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
         }
 
-        function renderImg(){
-            ctx.drawImage(bulletImg,0,0,80,80)
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            x += dx;
+            y += dy;
         }
-        function main(){
-            renderImg();
-            requestAnimationFrame(main);
+
+        setInterval(draw, 10);
+
+
+        function start() {
+            alert(1);
+
         }
-        loadImg();
-        main();
+>>>>>>> dc7cf86ad784d1e917d4c4be3fa0e72aaf705dc0
     </script>
 </body>
+
 </html>
