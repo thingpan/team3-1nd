@@ -10,42 +10,29 @@
             display: block;
             margin: 0 auto;
         }
+        
     </style>
+
 </head>
 <body>
     <canvas id="gameCanvas" width="1300" height="1000"></canvas>
-    <button id="startButton">시작</button>
+    <button id="startButton"  onclick="start()">
+        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
+    </button>
     <div id="timer">시간: 0</div>
     <script>
         const canvas = document.querySelector('#gameCanvas');
         const ctx = canvas.getContext('2d');
-        const startButton = document.querySelector('#startButton');
-        const timerElement = document.querySelector('#timer');
-        let gameInterval;
-        let startTime;
-        let elapsedTime = 0;
-
-
-
-        function gameLoop() {
       
-            // 시간 업데이트
-            if (startTime) {
-                const currentTime = new Date().getTime();
-                elapsedTime = Math.floor((currentTime - startTime) / 1000); // 밀리초를 초로 변환
-                timerElement.textContent = `시간: ${elapsedTime}`;
-            }
+     function start(){
+      
 
-            requestAnimationFrame(gameLoop); 
-        }
+     }
 
-        // 스타트 버튼 클릭 이벤트 핸들러
-        startButton.addEventListener('click', () => {
-            if (!startTime) {
-                startTime = new Date().getTime();
-                gameInterval = setInterval(gameLoop, 1000 / 60); 
-            }
-        });
+
+
+
+   
 
    
 
