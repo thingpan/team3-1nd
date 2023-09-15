@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +11,80 @@
             display: block;
             margin: 0 auto;
         }
-        
     </style>
 
 </head>
+
 <body>
-    <canvas id="gameCanvas" width="1300" height="1000"></canvas>
-    <button id="startButton"  onclick="start()">
-        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
+    <canvas id="gameCanvas"></canvas>
+    <button id="startButton" onclick="main()">
+        <img th:src="@{/imgs/start.png}" width="150px" height="150px">
     </button>
     <div id="timer">시간: 0</div>
     <script>
-        const canvas = document.querySelector('#gameCanvas');
-        const ctx = canvas.getContext('2d');
-      
-     function start(){
-      alert(1);
-        
+        let canvas = document.querySelector('#gameCanvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = 400;
+        canvas.height = 400;
 
-     }
+        let keysDown = {};
+
+        let humanX = canvas.width / 2 - 32;
+        let humanY = canvas.height - 64;
+        let humanImage
+
+        function loadImage() {
+            humanImage = new Image();
+            humanImage.src = "./../imgs/human.png";
+        }
+
+        function render() {
+            ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+        }
+
+        function animation() {
+            update();
+            render();
+            requestAnimationFrame(animation);
+        }
+
+        function setupKeyboardListener() {
+            document.addEventListener("keydown", function (event) {
+                keysDown[event.keyCode] = true;
+                console.log(keysDown);
+            });
+
+            document.addEventListener("keyup", function (event) {
+                delete keysDown[event.keyCode];
+                console.log(keysDown);
+            })
+        }
+
+        function update() {
+            if (39 in keysDown) {
+                //right
+                humanX += 5;
+            } else if (37 in keysDown) {
+                //left
+                humanX -= 5;
+            } else if (40 in keysDown) {
+                //up
+                humanY += 5;
+            } else if (38 in keysDown) {
+                //down
+                humanY -= 5;
+            }
+
+        }
+
+        function main() {
+            loadImage();
+            setupKeyboardListener();
+            animation();
+        }
+
+
     </script>
 </body>
+
 </html>
