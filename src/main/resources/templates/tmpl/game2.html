@@ -21,13 +21,25 @@
     </button>
     <div id="timer">시간: 0</div>
     <script>
+        let bulletImg;
+
         const canvas = document.querySelector('#gameCanvas');
         const ctx = canvas.getContext('2d');
-      
-     function start(){
-      alert(1);
         
-     }
+        function loadImg(){
+            bulletImg  = new Image();
+            bulletImg.src = "./../imgs/bullet2.png";
+        }
+
+        function renderImg(){
+            ctx.drawImage(bulletImg,0,0,80,80)
+        }
+        function main(){
+            renderImg();
+            requestAnimationFrame(main);
+        }
+        loadImg();
+        main();
     </script>
 </body>
 </html>
