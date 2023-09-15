@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>총알 피하기 게임</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="1300" height="1000"></canvas>
+    <button id="startButton" onclick="start()">
+        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
+    </button>
+    <div id="timer">시간: 0</div>
+    <script>
+        const canvas = document.querySelector('#gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let btnBoolean = true;
+        let gameTimer; // 게임 타이머 변수
+        let seconds = 0; // 초 카운터 변수
+      
+        function start() {
+            // 게임 타이머를 시작
+            gameTimer = setInterval(updateTimer, 1000);
+
+            // 시작 버튼을 비활성화
+            document.querySelector('#startButton').disabled = true;
+        }
+
+        function updateTimer() {
+            // 초 카운터를 1씩 증가
+            seconds++;
+            // 화면에 시간을 업데이트
+            document.querySelector('#timer').textContent = `시간: ${seconds}`;
+        }
+    </script>
+</body>
+</html>
