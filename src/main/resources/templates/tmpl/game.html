@@ -58,11 +58,22 @@
             } else if (38 in keysDown) {
                 //down
                 humanY -= 5;
-            }
-            else if (39 in keysDown && 40 in keysDown){
+            }else if (39 in keysDown && 40 in keysDown){
                 //right + up
                 humanX += 2.5;
                 humanY += 2.5;
+            }else if (39 in keysDown && 38 in keysDown){
+                //right + down
+                humanX += 2.5;
+                humanY -= 2.5;
+            }else if (37 in keysDown && 40 in keysDown){
+                //left + up
+                humanX -= 2.5;
+                humanY += 2.5;
+            }else if (37 in keysDown && 38 in keysDown){
+                //left + down
+                humanX -= 2.5;
+                humanY -= 2.5;
             }
 
 
