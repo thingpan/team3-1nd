@@ -42,48 +42,46 @@
             humanImage.src = "./../imgs/human.png";
             shootImage = new Image();
             shootImage.src = "./../imgs/hamer.png";
+       
         }
-
+  
 
         function update() {
-            if (39 in keysDown) {
-                //right
-                humanX += 5;
-            } else if (37 in keysDown) {
-                //left
-                humanX -= 5;
-            } else if (40 in keysDown) {
-                //up
-                humanY += 5;
-            } else if (38 in keysDown) {
-                //down
-                humanY -= 5;
-            }else if (39 in keysDown && 40 in keysDown){
-                //right + up
-                humanX += 2.5;
-                humanY += 2.5;
-            }else if (39 in keysDown && 38 in keysDown){
-                //right + down
-                humanX += 2.5;
-                humanY -= 2.5;
-            }else if (37 in keysDown && 40 in keysDown){
-                //left + up
-                humanX -= 2.5;
-                humanY += 2.5;
-            }else if (37 in keysDown && 38 in keysDown){
-                //left + down
-                humanX -= 2.5;
-                humanY -= 2.5;
-            }
-
+    if (39 in keysDown && 38 in keysDown){
+        // 오른쪽 + 위
+        humanX += 2.5;
+        humanY -= 2.5;
+    } else if (39 in keysDown && 40 in keysDown){
+        // 오른쪽 + 아래
+        humanX += 2.5;
+        humanY += 2.5;
+    } else if (37 in keysDown && 38 in keysDown){
+        // 왼쪽 + 위
+        humanX -= 2.5;
+        humanY -= 2.5;
+    } else if (37 in keysDown && 40 in keysDown){
+        // 왼쪽 + 아래
+        humanX -= 2.5;
+        humanY += 2.5;
+    } else if (39 in keysDown) {
+        // 오른쪽
+        humanX += 5;
+    } else if (37 in keysDown) {
+        // 왼쪽
+        humanX -= 5;
+    } else if (40 in keysDown) {
+        // 아래
+        humanY += 5;
+    } else if (38 in keysDown) {
+        // 위
+        humanY -= 5;
+    }
 
         }
 
         function render() {
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
-            for(let i =0; i<shootList.length; i++){
-            cts.drawImage(shootImage,shootList[i].x,shootList[i].y);
-            }
+          
         }
 
         function animation() {
@@ -113,8 +111,8 @@
             this.x =0;
             this.y =0;
             this.init =function(){
-            this.y= generateRandomValue(0,canvas.height-48)
-            this.x= generateRandomValue(0,canvas.width-48)
+            this.y= generateRandomValue(0,canvas.height-5)
+            this.x= generateRandomValue(0,canvas.width-5)
             shootList.push(this);
             }
         }
@@ -131,6 +129,7 @@
             setupKeyboardListener();
             animation();
             gameTimer = setInterval(updateTimer, 1000);
+            createshoot();
             document.querySelector('#startButton').disabled = true;
         }
 
