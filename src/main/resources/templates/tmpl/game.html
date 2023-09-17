@@ -35,10 +35,13 @@
         let humanX = canvas.width / 2 - 32;
         let humanY = canvas.height - 64;
         let humanImage
+        let shootImage
 
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/human.png";
+            shootImage = new Image();
+            shootImage.src = "./../imgs/hamer.png";
         }
 
 
@@ -67,6 +70,9 @@
 
         function render() {
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+            for(let i =0; i<shootList.length; i++){
+            cts.drawImage(shootImage,shootList[i].x,shootList[i].y);
+            }
         }
 
         function animation() {
@@ -86,7 +92,28 @@
                 console.log(keysDown);
             })
         }
+        function generateRandomValue(min,max){
+            let randomNum =Math.floor(Math.random()*(max-min+1))+min
+            return randomNum;
+        }
+        let shootList=[]
 
+        function shoot(){
+            this.x =0;
+            this.y =0;
+            this.init =function(){
+            this.y= generateRandomValue(0,canvas.height-48)
+            this.x= generateRandomValue(0,canvas.width-48)
+            shootList.push(this);
+            }
+        }
+        function createshoot(){
+            const interval =setInterval(function(){
+                let e =new shoot()
+                e.init()
+            },1000 )
+        }
+      
 
         function main() {
             loadImage();
@@ -99,10 +126,12 @@
         function updateTimer() {
             // 초 카운터를 1씩 증가
             seconds++;
+            
             // 화면에 시간을 업데이트
             document.querySelector('#timer').textContent = `시간: ${seconds}`;
         }
 
+    
 
     </script>
 </body>
