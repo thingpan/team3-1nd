@@ -139,6 +139,7 @@
             };
             this.update = function () {
                 this.y += 3;
+
                 if (
                     this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
                     this.x + 20 > humanX &&
@@ -147,7 +148,7 @@
                 ) {
                     gameOver = true;
                     document.querySelector('#startButton').disabled = false;
-                    alert('게임종료, 버틴시간 : ' + seconds);
+                    alert(`게임종료, 버틴시간 :  + ${seconds}`);
                     clearInterval(gameTimer);
                 }
             }
