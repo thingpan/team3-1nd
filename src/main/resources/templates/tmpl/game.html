@@ -22,7 +22,8 @@
     </button>
     <div id="timer">시간: 0</div>
     <script>
-                let canvas = document.querySelector('#gameCanvas');
+        let gameOver = false;
+        let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
         canvas.width = 400;
         canvas.height = 400;
@@ -36,15 +37,19 @@
         let humanY = canvas.height - 64;
         let humanImage
         let shootImage
-        
+        let gameOverImage
+
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/human.png";
             shootImage = new Image();
-            shootImage.src = "./../imgs/hamer.png";
+            shootImage.src = "./../imgs/bullet.jpg";
 
         }
-        
+        gameOverImage = new Image();
+        gameOverImage.src = "./../imgs/gameover.jpg";
+
+
 
         function update() {
             if (39 in keysDown && 38 in keysDown) {
@@ -60,7 +65,6 @@
                 humanX -= 2.5;
                 humanY -= 2.5;
             } else if (37 in keysDown && 40 in keysDown) {
-
                 // 왼쪽 + 아래
                 humanX -= 2.5;
                 humanY += 2.5;
@@ -77,7 +81,6 @@
                 // 위
                 humanY -= 5;
             }
-
             for (let i = 0; i < shootList.length; i++) {
                 shootList[i].update();
             }
