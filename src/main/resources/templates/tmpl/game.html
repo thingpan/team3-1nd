@@ -47,35 +47,35 @@
   
 
         function update() {
-    if (39 in keysDown && 38 in keysDown){
-        // 오른쪽 + 위
-        humanX += 2.5;
-        humanY -= 2.5;
-    } else if (39 in keysDown && 40 in keysDown){
-        // 오른쪽 + 아래
-        humanX += 2.5;
-        humanY += 2.5;
-    } else if (37 in keysDown && 38 in keysDown){
-        // 왼쪽 + 위
-        humanX -= 2.5;
-        humanY -= 2.5;
-    } else if (37 in keysDown && 40 in keysDown){
-        // 왼쪽 + 아래
-        humanX -= 2.5;
-        humanY += 2.5;
-    } else if (39 in keysDown) {
-        // 오른쪽
-        humanX += 5;
-    } else if (37 in keysDown) {
-        // 왼쪽
-        humanX -= 5;
-    } else if (40 in keysDown) {
-        // 아래
-        humanY += 5;
-    } else if (38 in keysDown) {
-        // 위
-        humanY -= 5;
-    }
+            if (39 in keysDown && 38 in keysDown){
+                // 오른쪽 + 위
+                humanX += 2.5;
+                humanY -= 2.5;
+            } else if (39 in keysDown && 40 in keysDown){
+                // 오른쪽 + 아래
+                humanX += 2.5;
+                humanY += 2.5;
+            } else if (37 in keysDown && 38 in keysDown){
+                // 왼쪽 + 위
+                humanX -= 2.5;
+                humanY -= 2.5;
+            } else if (37 in keysDown && 40 in keysDown){
+                // 왼쪽 + 아래
+                humanX -= 2.5;
+                humanY += 2.5;
+            } else if (39 in keysDown) {
+                // 오른쪽
+                humanX += 5;
+            } else if (37 in keysDown) {
+                // 왼쪽
+                humanX -= 5;
+            } else if (40 in keysDown) {
+                // 아래
+                humanY += 5;
+            } else if (38 in keysDown) {
+                // 위
+                humanY -= 5;
+            }
 
         }
 
