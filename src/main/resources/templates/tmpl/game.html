@@ -22,7 +22,7 @@
     </button>
     <div id="timer">시간: 0</div>
     <script>
-        let canvas = document.querySelector('#gameCanvas');
+                let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
         canvas.width = 400;
         canvas.height = 400;
@@ -36,30 +36,31 @@
         let humanY = canvas.height - 64;
         let humanImage
         let shootImage
-
+        
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/human.png";
             shootImage = new Image();
             shootImage.src = "./../imgs/hamer.png";
-       
+
         }
-  
+        
 
         function update() {
-            if (39 in keysDown && 38 in keysDown){
+            if (39 in keysDown && 38 in keysDown) {
                 // 오른쪽 + 위
                 humanX += 2.5;
                 humanY -= 2.5;
-            } else if (39 in keysDown && 40 in keysDown){
+            } else if (39 in keysDown && 40 in keysDown) {
                 // 오른쪽 + 아래
                 humanX += 2.5;
                 humanY += 2.5;
-            } else if (37 in keysDown && 38 in keysDown){
+            } else if (37 in keysDown && 38 in keysDown) {
                 // 왼쪽 + 위
                 humanX -= 2.5;
                 humanY -= 2.5;
-            } else if (37 in keysDown && 40 in keysDown){
+            } else if (37 in keysDown && 40 in keysDown) {
+
                 // 왼쪽 + 아래
                 humanX -= 2.5;
                 humanY += 2.5;
@@ -77,17 +78,34 @@
                 humanY -= 5;
             }
 
+            for (let i = 0; i < shootList.length; i++) {
+                shootList[i].update();
+            }
+
         }
 
         function render() {
+
+            // 캔버스를 클리어
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 사람 이미지 그리기
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
-          
+
+            // 발사체 이미지 그리기
+            for (let i = 0; i < shootList.length; i++) {
+                ctx.drawImage(shootImage, shootList[i].x, shootList[i].y, 20, 20);
+            }
         }
 
         function animation() {
-            update();
-            render();
-            requestAnimationFrame(animation);
+            if (!gameOver) { 
+                update();
+                render();
+                requestAnimationFrame(animation);
+            } else {
+                ctx.drawImage(gameOverImage, 10, 10, 400, 200);
+            }
         }
 
         function setupKeyboardListener() {
@@ -101,28 +119,45 @@
                 console.log(keysDown);
             })
         }
-        function generateRandomValue(min,max){
-            let randomNum =Math.floor(Math.random()*(max-min+1))+min
+        function generateRandomValue(min, max) {
+            let randomNum = Math.floor(Math.random() * (max - min + 1)) + min
             return randomNum;
         }
-        let shootList=[]
 
-        function shoot(){
-            this.x =0;
-            this.y =0;
-            this.init =function(){
-            this.y= generateRandomValue(0,canvas.height-5)
-            this.x= generateRandomValue(0,canvas.width-5)
-            shootList.push(this);
+        let shootList = []
+
+        function shoot() {
+            this.x = 0;
+            this.y = 0;
+            this.init = function () {
+                this.y = 0;
+                this.x = generateRandomValue(0, canvas.width - 48)
+                shootList.push(this);
+            };
+            this.update = function () {
+                this.y += 3;
+
+                if (
+                    this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
+                    this.x + 20 > humanX &&
+                    this.y < humanY + 30 &&
+                    this.y + 20 > humanY
+                ) {
+                    gameOver = true;
+                    document.querySelector('#startButton').disabled = false;
+                    alert(`게임종료, 버틴시간 :  + ${seconds}`);
+                    clearInterval(gameTimer);
+                }
             }
-        }
-        function createshoot(){
-            const interval =setInterval(function(){
-                let e =new shoot()
+        };
+
+        function createshoot() {
+            const interval = setInterval(function () {
+                let e = new shoot()
                 e.init()
-            },1000 )
+            }, 1000)
         }
-      
+
 
         function main() {
             loadImage();
@@ -136,12 +171,12 @@
         function updateTimer() {
             // 초 카운터를 1씩 증가
             seconds++;
-            
+
             // 화면에 시간을 업데이트
             document.querySelector('#timer').textContent = `시간: ${seconds}`;
         }
 
-    
+
 
     </script>
 </body>
