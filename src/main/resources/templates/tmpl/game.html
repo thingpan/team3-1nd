@@ -102,7 +102,7 @@
         }
 
         function animation() {
-            if (!gameOver) {
+            if (!gameOver) { 
                 update();
                 render();
                 requestAnimationFrame(animation);
@@ -126,6 +126,7 @@
             let randomNum = Math.floor(Math.random() * (max - min + 1)) + min
             return randomNum;
         }
+
         let shootList = []
 
         function shoot() {
@@ -138,8 +139,6 @@
             };
             this.update = function () {
                 this.y += 3;
-
-
                 if (
                     this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
                     this.x + 20 > humanX &&
@@ -147,6 +146,9 @@
                     this.y + 20 > humanY
                 ) {
                     gameOver = true;
+                    document.querySelector('#startButton').disabled = false;
+                    alert('게임종료, 버틴시간 : ' + seconds);
+                    clearInterval(gameTimer);
                 }
             }
         };
@@ -160,7 +162,6 @@
 
 
         function main() {
-
             loadImage();
             setupKeyboardListener();
             animation();
