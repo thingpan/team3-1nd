@@ -136,6 +136,18 @@
                 // 위
                 humanY -= 5;
             }
+            if(humanX <= 0){
+                humanX = 0;
+            }
+            if(humanX >= canvas.width-30){
+                humanX = canvas.width-30;
+            }
+            if(humanY <= 0){
+                humanY = 0;
+            }
+            if(humanY >= canvas.height-30){
+                humanY = canvas.height-30;
+            }
 
 
             for (let i = 0; i < shootList.length; i++) {
