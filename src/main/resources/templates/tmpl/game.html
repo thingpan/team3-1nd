@@ -17,27 +17,28 @@
 
 <body>
     <canvas id="gameCanvas"></canvas>
-    <button id="startButton" onclick="main()">
-        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
-    </button>
     <div id="timer">시간: 0</div>
     <script>
         let gameOver = false;
+        let playing = false;
         let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
-        canvas.width = 400;
-        canvas.height = 400;
-      
+        canvas.width = 800;
+        canvas.height = 800;
+
         let gameTimer; // 게임 타이머 변수
         let seconds = 0; // 초 카운터 변수
 
         let keysDown = {};
+        let startDown = {};
 
         let humanX = canvas.width / 2 - 32;
-        let humanY = canvas.height / 2; 
+        let humanY = canvas.height / 2;
         let humanImage
         let shootImage
         let gameOverImage
+
+        let interval;
 
         function loadImage() {
             humanImage = new Image();
@@ -81,13 +82,11 @@
                 // 위
                 humanY -= 5;
             }
-        
-     
+
+
             for (let i = 0; i < shootList.length; i++) {
                 shootList[i].update();
             }
-
-        
         }
         function render() {
 
@@ -109,21 +108,24 @@
                 render();
                 requestAnimationFrame(animation);
             } else {
-                ctx.drawImage(gameOverImage, 10, 10, 400, 200);
+                ctx.drawImage(gameOverImage, 10, 10, 800, 400);
+                startButtonListener();
             }
         }
+
+
 
         function setupKeyboardListener() {
             document.addEventListener("keydown", function (event) {
                 keysDown[event.keyCode] = true;
-                console.log(keysDown);
+
             });
 
             document.addEventListener("keyup", function (event) {
                 delete keysDown[event.keyCode];
-                console.log(keysDown);
-            })
+            });
         }
+
         function generateRandomValue(min, max) {
             let randomNum = Math.floor(Math.random() * (max - min + 1)) + min
             return randomNum;
@@ -136,7 +138,6 @@
             this.y = 0;
             let randomDirection = Math.floor(Math.random() * 3);
             let randomPosition = Math.floor(Math.random() * 2);
-            console.log(randomPosition);
             //위
             if (randomPosition == 0) {
                 this.init = function () {
@@ -148,7 +149,7 @@
             //아래
             if (randomPosition == 1) {
                 this.init = function () {
-                    this.y = 400;
+                    this.y = canvas.height;
                     this.x = generateRandomValue(0, canvas.width - 48)
                     shootList.push(this);
                 };
@@ -187,7 +188,7 @@
                     this.y + 20 > humanY
                 ) {
                     gameOver = true;
-                    document.querySelector('#startButton').disabled = false;
+                    playing = false;
                     alert(`게임종료, 버틴시간 :  + ${seconds}`);
                     clearInterval(gameTimer);
                 }
@@ -195,12 +196,11 @@
         };
 
         function createshoot() {
-            const interval = setInterval(function () {
+            interval = setInterval(function () {
                 let e = new shoot()
                 e.init()
             }, 100)
         }
-
 
         function main() {
             loadImage();
@@ -208,7 +208,6 @@
             animation();
             gameTimer = setInterval(updateTimer, 1000);
             createshoot();
-            document.querySelector('#startButton').disabled = true;
         }
 
         function updateTimer() {
@@ -218,6 +217,28 @@
             // 화면에 시간을 업데이트
             document.querySelector('#timer').textContent = `시간: ${seconds}`;
         }
+
+
+        function startButtonListener() {
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode == 32 && !playing) {
+                    playing = true;
+                    gameOver = false;
+                    // 캔버스를 클리어
+                    clearInterval(interval)
+                    seconds = 0;
+                    keysDown = {};
+                    shootList = [];
+                    humanX = canvas.width / 2 - 32;
+                    humanY = canvas.height / 2;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    main();
+                }
+            });
+        }
+
+        startButtonListener();
+
 
 
 
