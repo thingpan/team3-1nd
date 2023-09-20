@@ -5,12 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>총알 피하기 게임</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
         canvas {
             border: 1px solid black;
             display: block;
             margin: 0 auto;
             background-image: url("[[${#httpServletRequest.contextPath}]]/imgs/screen1.jpg");
+
+        }
+
+        body {
+            background-color: black;
+            /* 애니메이션 효과 설정 */
+        }
+
+        #timer {
+            color: white;
+            border: 3px;
+            font-family: 'Dongle', sans-serif;
+            font-size: 40px;
+            text-align: center;
         }
     </style>
 
@@ -18,7 +36,7 @@
 
 <body>
     <canvas id="gameCanvas"></canvas>
-    <div id="timer">시간: 0</div>
+    <div id="timer">생존 시간: 0</div>
     <script>
         let gameOver = false;
         let playing = false;
@@ -45,31 +63,32 @@
             humanImage = new Image();
             humanImage.src = "./../imgs/UFO.png";
             shootImage = new Image();
-            shootImage.src = "./../imgs/bullet2.png";
+            shootImage.src = "./../imgs/meteo.png";
+            gameOverImage = new Image();
+            gameOverImage.src = "./../imgs/gameover.jpg";
 
         }
-        gameOverImage = new Image();
-        gameOverImage.src = "./../imgs/gameover.jpg";
+
 
 
 
         function update() {
             if (39 in keysDown && 38 in keysDown) {
                 // 오른쪽 + 위
-                humanX += 2.5;
-                humanY -= 2.5;
+                humanX += 5;
+                humanY -= 5;
             } else if (39 in keysDown && 40 in keysDown) {
                 // 오른쪽 + 아래
-                humanX += 2.5;
-                humanY += 2.5;
+                humanX += 5;
+                humanY += 5;
             } else if (37 in keysDown && 38 in keysDown) {
                 // 왼쪽 + 위
-                humanX -= 2.5;
-                humanY -= 2.5;
+                humanX -= 5;
+                humanY -= 5;
             } else if (37 in keysDown && 40 in keysDown) {
                 // 왼쪽 + 아래
-                humanX -= 2.5;
-                humanY += 2.5;
+                humanX -= 5;
+                humanY += 5;
             } else if (39 in keysDown) {
                 // 오른쪽
                 humanX += 5;
@@ -159,34 +178,34 @@
             this.update = function () {
                 //직선
                 if (randomDirection == 0 && randomPosition == 0) {
-                    this.y += 3;
+                    this.y += 5;
                 }
                 if (randomDirection == 0 && randomPosition == 1) {
-                    this.y -= 3;
+                    this.y -= 5;
                 }
                 //왼쪽에서 오른쪽
                 if (randomDirection == 1 && randomPosition == 0) {
-                    this.y += 3;
-                    this.x += 3;
+                    this.y += 5;
+                    this.x += 5;
                 }
                 if (randomDirection == 1 && randomPosition == 1) {
-                    this.y -= 3;
-                    this.x += 3;
+                    this.y -= 5;
+                    this.x += 5;
                 }
                 //오른쪽에서 왼쪽
                 if (randomDirection == 2 && randomPosition == 0) {
-                    this.y += 3;
-                    this.x -= 3;
+                    this.y += 5;
+                    this.x -= 5;
                 }
                 if (randomDirection == 2 && randomPosition == 1) {
-                    this.y -= 3;
-                    this.x -= 3;
+                    this.y -= 5;
+                    this.x -= 5;
                 }
                 if (
                     this.x < humanX + 5 &&  //30은 휴면의 사진 크기 20은 총알의 크기
-                    this.x + 20 > humanX &&
+                    this.x + 10 > humanX &&
                     this.y < humanY + 5 &&
-                    this.y + 20 > humanY
+                    this.y + 10 > humanY
                 ) {
                     gameOver = true;
                     playing = false;
