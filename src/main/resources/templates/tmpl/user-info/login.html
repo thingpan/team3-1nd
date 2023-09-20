@@ -3,21 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>로그인 폼</title>
     <style>
-        div.error-div{
-            color:red;
+        body {
+            font-family: Arial, sans-serif;
+            background-color:aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 110s;
+        }
+
+        .login-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+            height: 300px;;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
             font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        .error-div {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .login-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <form method="post" action="/login">
-        <input type="text" name="uiId" id="uiId"><br>
-        <input type="text" name="uiPwd" id="uiPwd"><br>
-        <div class="error-div" th:text="${msg}"></div>
-        <button type="button" onclick="login()">로그인</button>
-    </form>
+    <div class="login-form">
+        <h2>로그인</h2>
+        <form method="post" action="/login">
+            <div class="form-group">
+             
+                <input type="text" name="uiId" id="uiId" placeholder="사용자 이름" required>
+            </div>
+            <div class="form-group">
+          
+                <input type="password" name="uiPwd" id="uiPwd" placeholder="비밀번호" required>
+            </div>
+            
+            <div class="error-div" th:text="${msg}"></div>
+            <button type="button" class="login-button" onclick="login()">로그인</button>
+        </form>
+    </div>
     <script>
         async function login(){
             const json = JSON.stringify({
