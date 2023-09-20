@@ -10,6 +10,7 @@
             border: 1px solid black;
             display: block;
             margin: 0 auto;
+            background-image: url("[[${#httpServletRequest.contextPath}]]/imgs/screen1.jpg");
         }
     </style>
 
@@ -42,7 +43,7 @@
 
         function loadImage() {
             humanImage = new Image();
-            humanImage.src = "./../imgs/human.png";
+            humanImage.src = "./../imgs/UFO.png";
             shootImage = new Image();
             shootImage.src = "./../imgs/bullet2.png";
 
@@ -182,9 +183,9 @@
                     this.x -= 3;
                 }
                 if (
-                    this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
+                    this.x < humanX + 5 &&  //30은 휴면의 사진 크기 20은 총알의 크기
                     this.x + 20 > humanX &&
-                    this.y < humanY + 30 &&
+                    this.y < humanY + 5 &&
                     this.y + 20 > humanY
                 ) {
                     gameOver = true;
