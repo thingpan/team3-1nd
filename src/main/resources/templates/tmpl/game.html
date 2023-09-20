@@ -18,7 +18,7 @@
 <body>
     <canvas id="gameCanvas"></canvas>
     <button id="startButton" onclick="main()">
-        <img th:src="@{/imgs/start.png}" width="150px" height="150px">
+        <img th:src="@{/imgs/start.png}" width="150px" height="150px"> 
     </button>
     <div id="timer">시간: 0</div>
     <script>
@@ -26,7 +26,7 @@
         let ctx = canvas.getContext('2d');
         canvas.width = 400;
         canvas.height = 400;
-
+      
         let gameTimer; // 게임 타이머 변수
         let seconds = 0; // 초 카운터 변수
 
@@ -56,8 +56,8 @@
                 //down
                 humanY -= 5;
             }
-
-        }
+        
+     }
 
         function render() {
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
