@@ -55,17 +55,19 @@
         let humanImage
         let shootImage
         let gameOverImage
+        let boomImage
 
         let interval;
-
+ 
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/UFO.png";
             shootImage = new Image();
             shootImage.src = "./../imgs/meteo.png";
             gameOverImage = new Image();
-            gameOverImage.src = "./../imgs/gameover.jpg";
-
+            gameOverImage.src = "./../imgs/game-over1.png";
+            boomImage = new Image();
+            boomImage.src = "./../imgs/boom.png";
         }
 
 
@@ -127,7 +129,7 @@
                 render();
                 requestAnimationFrame(animation);
             } else {
-                ctx.drawImage(gameOverImage, 10, 10, 800, 400);
+                ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50);
                 startButtonListener();
             }
         }
@@ -201,14 +203,15 @@
                     this.x -= 5;
                 }
                 if (
-                    this.x < humanX + 5 &&  //30은 휴면의 사진 크기 20은 총알의 크기
+                    this.x < humanX + 15 &&  //30은 휴면의 사진 크기 20은 총알의 크기
                     this.x + 10 > humanX &&
-                    this.y < humanY + 5 &&
+                    this.y < humanY + 15 &&
                     this.y + 10 > humanY
                 ) {
+                    
                     gameOver = true;
                     playing = false;
-                    alert(`게임종료, 버틴시간 :  + ${seconds}`);
+                    
                     clearInterval(gameTimer);
                 }
             }
@@ -223,8 +226,8 @@
 
         function main() {
             loadImage();
-            setupKeyboardListener();
             animation();
+            setupKeyboardListener();
             gameTimer = setInterval(updateTimer, 1000);
             createshoot();
         }
@@ -234,7 +237,7 @@
             seconds++;
 
             // 화면에 시간을 업데이트
-            document.querySelector('#timer').textContent = `시간: ${seconds}`;
+            document.querySelector('#timer').textContent = `Alive Time: ${seconds}`;
         }
 
 
