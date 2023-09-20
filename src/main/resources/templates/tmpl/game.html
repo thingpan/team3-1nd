@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     <style>
+        
         canvas {
             border: 1px solid black;
             display: block;
@@ -30,19 +31,26 @@
             text-align: center;
         }
     </style>
-
+        <audio id="bgm" preload="auto">
+            <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
+            </audio>
+   
+   
 </head>
 
-<body>
     <canvas id="gameCanvas"></canvas>
+
+    <body>
     <div id="timer">Alive Time : 0</div>
     <script>
         let gameOver = false;
         let playing = false;
+        let bgm = document.getElementById("bgm");
         let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
         canvas.width = 800;
         canvas.height = 800;
+
 
         let gameTimer; // 게임 타이머 변수
         let seconds = 0; // 초 카운터 변수
@@ -210,6 +218,7 @@
                 ) {
                     
                     gameOver = true;
+                    bgm.pause();
                     playing = false;
                     
                     clearInterval(gameTimer);
@@ -225,6 +234,7 @@
         }
 
         function main() {
+            bgm.play();
             loadImage();
             animation();
             setupKeyboardListener();
@@ -243,10 +253,10 @@
 
         function startButtonListener() {
             document.addEventListener("keydown", function (event) {
-                if (event.keyCode == 32 && !playing) {
-                    playing = true;
-                    gameOver = false;
-                    // 캔버스를 클리어
+                if (event.keyCode == 32 && !playing) {        
+                    playing =true;         
+                    gameOver = false; 
+                    // 캔버스를 클리어            
                     clearInterval(interval)
                     seconds = 0;
                     keysDown = {};
@@ -258,8 +268,9 @@
                 }
             });
         }
-
+     
         startButtonListener();
+
 
 
 
