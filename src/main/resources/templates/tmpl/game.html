@@ -77,6 +77,8 @@
         let humanX = canvas.width / 2 - 32;
         let humanY = canvas.height / 2;
         let humanImage
+        let humanLeftImage
+        let humanRightImage
         let shootImage
         let gameOverImage
         let boomImage
@@ -86,6 +88,13 @@
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/UFO.png";
+
+            humanLeftImage = new Image();
+            humanLeftImage.src = "./../imgs/UFO-left.png";
+
+            humanRightImage = new Image();
+            humanRightImage.src = "./../imgs/UFO-right.png"
+
             shootImage = new Image();
             shootImage.src = "./../imgs/meteo.png";
             gameOverImage = new Image();
@@ -138,8 +147,34 @@
             // 캔버스를 클리어
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // 사람 이미지 그리기
+            // 사람 이미지 그리기 
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+            if (39 in keysDown && 38 in keysDown) {
+                // 오른쪽 + 위
+                ctx.drawImage(humanRightImage, humanX, humanY, 30, 30);
+            } else if (39 in keysDown && 40 in keysDown) {
+                // 오른쪽 + 아래
+                ctx.drawImage(humanRightImage, humanX, humanY, 30, 30);
+            } else if (37 in keysDown && 38 in keysDown) {
+                // 왼쪽 + 위
+                ctx.drawImage(humanLeftImage, humanX, humanY, 30, 30);
+            } else if (37 in keysDown && 40 in keysDown) {
+                // 왼쪽 + 아래
+                ctx.drawImage(humanLeftImage, humanX, humanY, 30, 30);
+            } else if (39 in keysDown) {
+                // 오른쪽
+                ctx.drawImage(humanRightImage, humanX, humanY, 30, 30);
+            } else if (37 in keysDown) {
+                // 왼쪽
+                ctx.drawImage(humanLeftImage, humanX, humanY, 30, 30);
+            } else if (40 in keysDown) {
+                // 아래
+                ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+            } else if (38 in keysDown) {
+                // 위
+                ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+            }
+            
 
             // 발사체 이미지 그리기
             for (let i = 0; i < shootList.length; i++) {
