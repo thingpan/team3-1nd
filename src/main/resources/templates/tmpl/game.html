@@ -38,9 +38,16 @@
             text-align: center;
         }
     </style>
-        <audio id="bgm" preload="auto">
+    <audio id="bgm" preload="auto">
             <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
             </audio>
+            <audio id="boom" preload="auto">
+                <source th:src="@{/bgm/boom.mp3}" type="audio/mpeg">
+                </audio>
+                <audio id="gameover" preload="auto">
+                    <source th:src="@{/bgm/gameover.mp3}" type="audio/mpeg">
+                    </audio>
+
    
    
 </head>
@@ -54,6 +61,7 @@
         let gameOver = false;
         let playing = false;
         let bgm = document.getElementById("bgm");
+        let boom = document.getElementById("boom");
         let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
         canvas.width = 800;
@@ -145,6 +153,7 @@
                 render();
                 requestAnimationFrame(animation); 
             } else {
+                boom.play();
                 ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50);
                 document.querySelector('#press').innerHTML = 'press the Spacebar';
                 startButtonListener();
