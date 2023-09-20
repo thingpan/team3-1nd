@@ -14,6 +14,7 @@
     <div th:if="${session.user} != null">
         <span th:text="${session.user.uiName}"></span>님 안녕하세요.<br>
         <a href = "/tmpl/main?giNum=1">두더지 잡기</a><br>
+        <a href = "/tmpl/game?giNum=2">총알 피하기</a><br>
         <span>나의 최고 점수</span>
         <div id="maxScore"></div>
         <ul></ul>

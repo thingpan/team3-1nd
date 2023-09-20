@@ -22,6 +22,7 @@
     </button>
     <div id="timer">시간: 0</div>
     <script>
+        let gameOver = false;
         let canvas = document.querySelector('#gameCanvas');
         let ctx = canvas.getContext('2d');
         canvas.width = 400;
@@ -35,38 +36,81 @@
         let humanX = canvas.width / 2 - 32;
         let humanY = canvas.height - 64;
         let humanImage
+        let shootImage
+        let gameOverImage
 
         function loadImage() {
             humanImage = new Image();
             humanImage.src = "./../imgs/human.png";
+            shootImage = new Image();
+            shootImage.src = "./../imgs/bullet2.png";
+
         }
+        gameOverImage = new Image();
+        gameOverImage.src = "./../imgs/gameover.jpg";
+
 
 
         function update() {
-            if (39 in keysDown) {
-                //right
+            if (39 in keysDown && 38 in keysDown) {
+                // 오른쪽 + 위
+                humanX += 2.5;
+                humanY -= 2.5;
+            } else if (39 in keysDown && 40 in keysDown) {
+                // 오른쪽 + 아래
+                humanX += 2.5;
+                humanY += 2.5;
+            } else if (37 in keysDown && 38 in keysDown) {
+                // 왼쪽 + 위
+                humanX -= 2.5;
+                humanY -= 2.5;
+            } else if (37 in keysDown && 40 in keysDown) {
+                // 왼쪽 + 아래
+                humanX -= 2.5;
+                humanY += 2.5;
+            } else if (39 in keysDown) {
+                // 오른쪽
                 humanX += 5;
             } else if (37 in keysDown) {
-                //left
+                // 왼쪽
                 humanX -= 5;
             } else if (40 in keysDown) {
-                //up
+                // 아래
                 humanY += 5;
             } else if (38 in keysDown) {
-                //down
+                // 위
                 humanY -= 5;
             }
         
      }
+            for (let i = 0; i < shootList.length; i++) {
+                shootList[i].update();
+            }
+
+        
 
         function render() {
+
+            // 캔버스를 클리어
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 사람 이미지 그리기
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
+
+            // 발사체 이미지 그리기
+            for (let i = 0; i < shootList.length; i++) {
+                ctx.drawImage(shootImage, shootList[i].x, shootList[i].y, 20, 20);
+            }
         }
 
         function animation() {
-            update();
-            render();
-            requestAnimationFrame(animation);
+            if (!gameOver) {
+                update();
+                render();
+                requestAnimationFrame(animation);
+            } else {
+                ctx.drawImage(gameOverImage, 10, 10, 400, 200);
+            }
         }
 
         function setupKeyboardListener() {
@@ -80,6 +124,82 @@
                 console.log(keysDown);
             })
         }
+        function generateRandomValue(min, max) {
+            let randomNum = Math.floor(Math.random() * (max - min + 1)) + min
+            return randomNum;
+        }
+
+        let shootList = [];
+
+        function shoot() {
+            this.x = 0;
+            this.y = 0;
+            let randomDirection = Math.floor(Math.random() * 3);
+            let randomPosition = Math.floor(Math.random() * 2);
+            console.log(randomPosition);
+            //위
+            if (randomPosition == 0) {
+                this.init = function () {
+                    this.y = 0;
+                    this.x = generateRandomValue(0, canvas.width - 48)
+                    shootList.push(this);
+                };
+            }
+            //아래
+            if (randomPosition == 1) {
+                this.init = function () {
+                    this.y = 400;
+                    this.x = generateRandomValue(0, canvas.width - 48)
+                    shootList.push(this);
+                };
+            }
+
+            this.update = function () {
+                //직선
+                if (randomDirection == 0 && randomPosition == 0) {
+                    this.y += 3;
+                }
+                if (randomDirection == 0 && randomPosition == 1) {
+                    this.y -= 3;
+                }
+                //왼쪽에서 오른쪽
+                if (randomDirection == 1 && randomPosition == 0) {
+                    this.y += 3;
+                    this.x += 3;
+                }
+                if (randomDirection == 1 && randomPosition == 1) {
+                    this.y -= 3;
+                    this.x += 3;
+                }
+                //오른쪽에서 왼쪽
+                if (randomDirection == 2 && randomPosition == 0) {
+                    this.y += 3;
+                    this.x -= 3;
+                }
+                if (randomDirection == 2 && randomPosition == 1) {
+                    this.y -= 3;
+                    this.x -= 3;
+                }
+                if (
+                    this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
+                    this.x + 20 > humanX &&
+                    this.y < humanY + 30 &&
+                    this.y + 20 > humanY
+                ) {
+                    gameOver = true;
+                    document.querySelector('#startButton').disabled = false;
+                    alert(`게임종료, 버틴시간 :  + ${seconds}`);
+                    clearInterval(gameTimer);
+                }
+            }
+        };
+
+        function createshoot() {
+            const interval = setInterval(function () {
+                let e = new shoot()
+                e.init()
+            }, 100)
+        }
 
 
         function main() {
@@ -87,15 +207,18 @@
             setupKeyboardListener();
             animation();
             gameTimer = setInterval(updateTimer, 1000);
+            createshoot();
             document.querySelector('#startButton').disabled = true;
         }
 
         function updateTimer() {
             // 초 카운터를 1씩 증가
             seconds++;
+
             // 화면에 시간을 업데이트
             document.querySelector('#timer').textContent = `시간: ${seconds}`;
         }
+
 
 
     </script>
