@@ -30,6 +30,13 @@
             font-size: 40px;
             text-align: center;
         }
+        #press{
+            color: white;
+            border: 3px;
+            font-family:'DotGothic16', sans-serif;;
+            font-size: 40px;
+            text-align: center;
+        }
     </style>
         <audio id="bgm" preload="auto">
             <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
@@ -41,7 +48,8 @@
     <canvas id="gameCanvas"></canvas>
 
     <body>
-    <div id="timer">Alive Time : 0</div>
+    <div id="timer">Press the Spacebar</div>
+    <div id="press"></div>
     <script>
         let gameOver = false;
         let playing = false;
@@ -137,7 +145,8 @@
                 render();
                 requestAnimationFrame(animation); 
             } else {
-                ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50); 
+                ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50);
+                document.querySelector('#press').innerHTML = 'press the Spacebar';
                 startButtonListener();
             }
         }
@@ -256,7 +265,7 @@
                 if (event.keyCode == 32 && !playing) {        
                     playing =true;         
                     gameOver = false; 
-                    // 캔버스를 클리어            
+                    document.querySelector('#press').innerHTML='';         
                     clearInterval(interval)
                     seconds = 0;
                     keysDown = {};
