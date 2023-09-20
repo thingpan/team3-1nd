@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <div id="gameOverText">
+        <h1>게임 오버</h1>
+        <p>당신의 점수는 : <span id="score"></span></p>
+    </div>
     <style>
         
         canvas {
@@ -37,6 +41,20 @@
             font-size: 40px;
             text-align: center;
         }
+        #gameOverText {    
+            display: none;
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        font-size: 36px;
+}
+
     </style>
     <audio id="bgm" preload="auto">
             <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
@@ -193,6 +211,21 @@
                 ctx.drawImage(shootImage, shootList[i].x, shootList[i].y, 20, 20);
             }
         }
+        function gameOverScreen() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+             // 게임 오버 텍스트 표시
+         let gameOverText = document.getElementById("gameOverText");
+         gameOverText.style.display = "block";
+
+            // 점수 표시
+        let scoreElement = document.getElementById("score");
+        scoreElement.textContent = seconds;
+
+            // 게임 오버 시 배경음악 멈춤
+            bgm.pause();
+}
+
 
         function animation() {
             if (!gameOver) {
@@ -201,9 +234,11 @@
                 requestAnimationFrame(animation); 
             } else {
                 boom.play();
+                gameOverScreen();
                 ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50);
                 document.querySelector('#press').innerHTML = 'press the Spacebar';
                 startButtonListener();
+                
             }
         }
 
@@ -321,7 +356,8 @@
                 if (event.keyCode == 32 && !playing) {        
                     playing =true;         
                     gameOver = false; 
-                    document.querySelector('#press').innerHTML='';         
+                    document.querySelector('#press').innerHTML='';
+                    document.querySelector('#gameOverText').style.display = 'none'; // 게임이 재시작될 때 숨깁니다.        
                     clearInterval(interval)
                     seconds = 0;
                     keysDown = {};
