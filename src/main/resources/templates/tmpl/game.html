@@ -43,7 +43,7 @@
             humanImage = new Image();
             humanImage.src = "./../imgs/human.png";
             shootImage = new Image();
-            shootImage.src = "./../imgs/bullet.jpg";
+            shootImage.src = "./../imgs/bullet2.png";
 
         }
         gameOverImage = new Image();
@@ -102,7 +102,7 @@
         }
 
         function animation() {
-            if (!gameOver) { 
+            if (!gameOver) {
                 update();
                 render();
                 requestAnimationFrame(animation);
@@ -127,19 +127,57 @@
             return randomNum;
         }
 
-        let shootList = []
+        let shootList = [];
 
         function shoot() {
             this.x = 0;
             this.y = 0;
-            this.init = function () {
-                this.y = 0;
-                this.x = generateRandomValue(0, canvas.width - 48)
-                shootList.push(this);
-            };
-            this.update = function () {
-                this.y += 3;
+            let randomDirection = Math.floor(Math.random() * 3);
+            let randomPosition = Math.floor(Math.random() * 2);
+            console.log(randomPosition);
+            //위
+            if (randomPosition == 0) {
+                this.init = function () {
+                    this.y = 0;
+                    this.x = generateRandomValue(0, canvas.width - 48)
+                    shootList.push(this);
+                };
+            }
+            //아래
+            if (randomPosition == 1) {
+                this.init = function () {
+                    this.y = 400;
+                    this.x = generateRandomValue(0, canvas.width - 48)
+                    shootList.push(this);
+                };
+            }
 
+            this.update = function () {
+                //직선
+                if (randomDirection == 0 && randomPosition == 0) {
+                    this.y += 3;
+                }
+                if (randomDirection == 0 && randomPosition == 1) {
+                    this.y -= 3;
+                }
+                //왼쪽에서 오른쪽
+                if (randomDirection == 1 && randomPosition == 0) {
+                    this.y += 3;
+                    this.x += 3;
+                }
+                if (randomDirection == 1 && randomPosition == 1) {
+                    this.y -= 3;
+                    this.x += 3;
+                }
+                //오른쪽에서 왼쪽
+                if (randomDirection == 2 && randomPosition == 0) {
+                    this.y += 3;
+                    this.x -= 3;
+                }
+                if (randomDirection == 2 && randomPosition == 1) {
+                    this.y -= 3;
+                    this.x -= 3;
+                }
                 if (
                     this.x < humanX + 30 &&  //30은 휴면의 사진 크기 20은 총알의 크기
                     this.x + 20 > humanX &&
@@ -158,7 +196,7 @@
             const interval = setInterval(function () {
                 let e = new shoot()
                 e.init()
-            }, 1000)
+            }, 100)
         }
 
 
