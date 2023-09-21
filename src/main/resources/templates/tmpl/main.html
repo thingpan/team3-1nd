@@ -147,7 +147,7 @@
     for (let i = 1; i <= 2; i++) {
       html += "<tr>";
       for (let j = 1; j < 4; j++) {
-        html += '<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>';
+        html += '<td id="holeTd" width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>';
       }
       html += "</tr>";
     }
@@ -155,7 +155,7 @@
     document.querySelector("#hole").innerHTML = html;
 
     function changeImg() {
-      const cells = document.querySelectorAll("td");
+      const cells = document.querySelectorAll("#holeTd");
       let randomCellIndex = Math.floor(Math.random() * cells.length);
       let colorRandom = Math.random() < 0.5 ? "red" : "blue";
 
@@ -311,12 +311,10 @@
           "Content-Type": "application/json;charset=UTF-8",
         },
       });
+
       const msg = await res.json();
       alert(msg.msg);
-      if (msg.url) {
-        location.href = msg.url;
-
-      }
+      location.reload();
     }
 
     window.addEventListener('load', async function () {
