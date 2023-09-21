@@ -11,6 +11,6 @@ public class PointInfoVO {
     private String credat;
     private String lmodat;
     private String giName;
-    private String uiName;
+    private String uiId;
     
 }

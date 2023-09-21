@@ -75,12 +75,11 @@
   }
 </style>
 <style>
-
   canvas {
-      background: #eee;
-      border: 1px solid black;
-      display: block;
-      margin: 0 auto;
+    background: #eee;
+    border: 1px solid black;
+    display: block;
+    margin: 0 auto;
   }
 </style>
 <audio id="bgm" preload="auto">
@@ -95,6 +94,22 @@
 <body>
   <div class="custom-cursor"></div>
 
+  <div style="text-align: left">
+    <p id="pointText" style="font-size: 50px;">나의 최고 점수</p>
+    <div id="maxScore" style="font-size: 50px;"></div>
+  </div>
+  <div>
+    <table border="1" >
+        <tr>
+            <th>Rank</th>
+            <th>ID</th>
+            <th>Score</th>
+        </tr>
+        <tbody id="tBody">
+
+        </tbody>
+    </table>
+</div>
   <div style="text-align: center">
     <p id="colorText" style="margin: 0%;" margin-right="1000px" margin-left="1000px">두더지를 잡아라 !!!!!</p>
   </div>
@@ -107,13 +122,9 @@
     <button id="startButton" onclick="start()">
       <img th:src="@{/imgs/start.png}" width="150px" height="150px" />
     </button>
-    
-    <div style="text-align: left">
-      <p id="colorText" style="margin-top:-850px"  >나의 최고 점수</p>
-      <canvas id="gameCanvas" width="500px" height="600px" style="margin-left:0px "  ></canvas>
   </div>
 
-  
+
 
   <script>
     let html = "<table align='center' >";
@@ -136,7 +147,7 @@
     for (let i = 1; i <= 2; i++) {
       html += "<tr>";
       for (let j = 1; j < 4; j++) {
-        html += '<td width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>';
+        html += '<td id="holeTd" width="200"><button id="imgBtn" onclick="upMsg(this)" data-num="' + cnt++ + '" disabled="disabled"><img src=".././imgs/hole.png" /></button></td>';
       }
       html += "</tr>";
     }
@@ -144,7 +155,7 @@
     document.querySelector("#hole").innerHTML = html;
 
     function changeImg() {
-      const cells = document.querySelectorAll("td");
+      const cells = document.querySelectorAll("#holeTd");
       let randomCellIndex = Math.floor(Math.random() * cells.length);
       let colorRandom = Math.random() < 0.5 ? "red" : "blue";
 
@@ -277,7 +288,7 @@
           // 3초 후 게임 시작
           setInterval(function () {
             changeImg();
-            changeText(); 
+            changeText();
           }, 1000);
 
           clickCount = 1; // 시작할 때 클릭 횟수 초기화
@@ -286,27 +297,45 @@
     }
 
     async function sendObj() {
-          const data = {
-            uiNum: '[[${session.user.uiNum}]]',
-            giNum:'[[${param.giNum}]]',
-            piPoint: point
-          }
-          console.log(data)
-          const json = JSON.stringify(data);
-          const res = await fetch(`/game-infos`, {
-            method: "POST",
-            body: json,
-            headers: {
-              "Content-Type": "application/json;charset=UTF-8",
-            },
-          });
-          const msg = await res.json();
-          alert(msg.msg);
-          if (msg.url) {
-            location.href = msg.url;
+      const data = {
+        uiNum: '[[${session.user.uiNum}]]',
+        giNum: '[[${param.giNum}]]',
+        piPoint: point
+      }
+      console.log(data)
+      const json = JSON.stringify(data);
+      const res = await fetch(`/game-infos`, {
+        method: "POST",
+        body: json,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      });
 
-          }
-        }
+      const msg = await res.json();
+      alert(msg.msg);
+      location.reload();
+    }
+
+    window.addEventListener('load', async function () {
+            const res = await fetch('/point-infos/max?giNum=1');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
+            const point = await res.json();
+            document.querySelector('#maxScore').innerHTML = point.piPoint;
+
+            const rankRes = await fetch('/point-infos/rank?giNum=1');
+            const users = await rankRes.json();
+            let html = '';
+            let i = 1;
+            for(const user of users){
+                html += '<tr>';
+                html += `<td>${i}</td>`;
+                html += `<td>${user.uiId}</td>`;
+                html += `<td>${user.piPoint}</td>`;
+                html += '</tr>';
+                i++;
+            }
+            document.querySelector('#tBody').innerHTML = html;
+        })
 
   </script>
 </body>

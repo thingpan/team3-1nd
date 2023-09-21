@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript" src=".././js/bootstrap.js"></script>
+
 </head>
+
 <body>
+
     안녕하세요 타임리프입니다.
     <div th:if="${session.user} == null">
         <a href="/tmpl/user-info/login">로그인</a>
@@ -21,13 +25,18 @@
         <div id="maxScore2"></div>
         <ul></ul>
     </div><br>
-    <button onclick="location.href='/tmpl/user-info/list'">list</button>
+    <button onclick="location.href='/tmpl/user-info/list'">list</button>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href=".././css/bootstrap.css">
     <script>
         //최고 점수 뽑기!(꼭 여기에 있어야 하는것은 아님, 게임페이지 안에 있어도 댐)
         window.addEventListener('load',async function(){
             const res = await fetch('/point-infos/max?giNum=1');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
             const point = await res.json();
             document.querySelector('#maxScore1').innerHTML=point.piPoint;
+            const res2 = await fetch('/point-infos/max?giNum=2');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
+            const point2 = await res2.json();
+            document.querySelector('#maxScore2').innerHTML=point2.piPoint;
         })
         window.addEventListener('load',async function(){
             const res = await fetch('/point-infos/max?giNum=2');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
