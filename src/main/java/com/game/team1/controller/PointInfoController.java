@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,8 @@ import com.game.team1.vo.MsgVO;
 import com.game.team1.vo.PointInfoVO;
 import com.game.team1.vo.UserInfoVO;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RestController
 public class PointInfoController {
     @Autowired
@@ -29,11 +32,12 @@ public class PointInfoController {
             msg.setUrl("/");
             msg.setSuccess(true);
         }
-        return msg;
+        return msg; 
     }
 
     @GetMapping("/point-infos/max")//그 게임에 대해 나의 베스트 점수 
     public PointInfoVO getMaxPointInfoVO(PointInfoVO point, HttpSession session) {
+        log.info("이건 멕스포인트=>{}", point);
         UserInfoVO user = (UserInfoVO) session.getAttribute("user");
         point.setUiNum(user.getUiNum());
         return pointInfoService.selectMaxPoint(point);
