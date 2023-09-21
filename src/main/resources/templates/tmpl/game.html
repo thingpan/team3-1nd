@@ -13,13 +13,11 @@
         <p>당신의 점수는 : <span id="score"></span></p>
     </div>
     <style>
-        
         canvas {
             border: 1px solid black;
             display: block;
-            margin: 0 auto;
+            margin: 0;
             background-image: url("[[${#httpServletRequest.contextPath}]]/imgs/screen1.jpg");
-
         }
 
         body {
@@ -30,51 +28,79 @@
         #timer {
             color: white;
             border: 3px;
-            font-family:'DotGothic16', sans-serif;;
+            font-family: 'DotGothic16', sans-serif;
+            ;
             font-size: 40px;
             text-align: center;
         }
-        #press{
+
+        #press {
             color: white;
             border: 3px;
-            font-family:'DotGothic16', sans-serif;;
+            font-family: 'DotGothic16', sans-serif;
             font-size: 40px;
             text-align: center;
         }
-        #gameOverText {    
-            display: none;
-        position:absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 20px;
-        border-radius: 10px;
-        color: white;
-        font-size: 36px;
-}
 
+        #gameOverText {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-size: 36px;
+        }
+
+        #bestScore {
+            font-family: 'DotGothic16', sans-serif;
+            color: white;
+        }
+
+        #bestScoreValue {
+            font-family: 'DotGothic16', sans-serif;
+            color: white;
+        }
+        table{
+            border-color: white;
+            font-family: 'DotGothic16', sans-serif;
+            color: white;
+        }
     </style>
     <audio id="bgm" preload="auto">
-            <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
-            </audio>
-            <audio id="boom" preload="auto">
-                <source th:src="@{/bgm/boom.mp3}" type="audio/mpeg">
-                </audio>
-                <audio id="gameover" preload="auto">
-                    <source th:src="@{/bgm/gameover.mp3}" type="audio/mpeg">
-                    </audio>
-
-   
-   
+        <source th:src="@{/bgm/game.mp3}" type="audio/mpeg">
+    </audio>
+    <audio id="boom" preload="auto">
+        <source th:src="@{/bgm/boom.mp3}" type="audio/mpeg">
+    </audio>
+    <audio id="gameover" preload="auto">
+        <source th:src="@{/bgm/gameover.mp3}" type="audio/mpeg">
+    </audio>
 </head>
-
-    <canvas id="gameCanvas"></canvas>
-
-    <body>
+<body>
+    <span id="bestScore">My Best Score</span><br>
+    <span id="bestScoreValue"></span>
+    <div id="canvasDiv" style="text-align: center;">
+        <canvas id="gameCanvas" style="display: inline;"></canvas>
+    </div>
     <div id="timer">Press the Spacebar</div>
     <div id="press"></div>
+    <div>
+        <table border="1" >
+            <tr>
+                <th>Rank</th>
+                <th>ID</th>
+                <th>Score</th>
+            </tr>
+            <tbody id="tBody">
+
+            </tbody>
+        </table>
+    </div>
     <script>
         let gameOver = false;
         let playing = false;
@@ -118,7 +144,7 @@
 
             gameOverImage = new Image();
             gameOverImage.src = "./../imgs/game-over1.png";
-            
+
             boomImage = new Image();
             boomImage.src = "./../imgs/boom.png";
         }
@@ -156,17 +182,17 @@
                 // 위
                 humanY -= 5;
             }
-            if(humanX <= 0){
+            if (humanX <= 0) {
                 humanX = 0;
             }
-            if(humanX >= canvas.width-30){
-                humanX = canvas.width-30;
+            if (humanX >= canvas.width - 30) {
+                humanX = canvas.width - 30;
             }
-            if(humanY <= 0){
+            if (humanY <= 0) {
                 humanY = 0;
             }
-            if(humanY >= canvas.height-30){
-                humanY = canvas.height-30;
+            if (humanY >= canvas.height - 30) {
+                humanY = canvas.height - 30;
             }
 
 
@@ -178,7 +204,6 @@
 
             // 캔버스를 클리어
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             // 사람 이미지 그리기 
             ctx.drawImage(humanImage, humanX, humanY, 30, 30);
             if (39 in keysDown && 38 in keysDown) {
@@ -206,7 +231,7 @@
                 // 위
                 ctx.drawImage(humanImage, humanX, humanY, 30, 30);
             }
-            
+
 
             // 발사체 이미지 그리기
             for (let i = 0; i < shootList.length; i++) {
@@ -214,33 +239,33 @@
             }
         }
         function gameOverScreen() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-             // 게임 오버 텍스트 표시
-         let gameOverText = document.getElementById("gameOverText");
-         gameOverText.style.display = "block";
+            // 게임 오버 텍스트 표시
+            let gameOverText = document.getElementById("gameOverText");
+            gameOverText.style.display = "block";
 
             // 점수 표시
-        let scoreElement = document.getElementById("score");
-        scoreElement.textContent = seconds;
+            let scoreElement = document.getElementById("score");
+            scoreElement.textContent = seconds;
 
             // 게임 오버 시 배경음악 멈춤
             bgm.pause();
-}
+        }
 
 
         function animation() {
             if (!gameOver) {
                 update();
                 render();
-                requestAnimationFrame(animation); 
+                requestAnimationFrame(animation);
             } else {
                 boom.play();
                 gameOverScreen();
-                ctx.drawImage(boomImage,humanX - 15,humanY - 15,50,50);
+                sendObj();
+                ctx.drawImage(boomImage, humanX - 15, humanY - 15, 50, 50);
                 document.querySelector('#press').innerHTML = 'press the Spacebar';
                 startButtonListener();
-                
             }
         }
 
@@ -318,11 +343,9 @@
                     this.y < humanY + 15 &&
                     this.y + 10 > humanY
                 ) {
-                    
                     gameOver = true;
                     bgm.pause();
                     playing = false;
-                    
                     clearInterval(gameTimer);
                 }
             }
@@ -355,10 +378,10 @@
 
         function startButtonListener() {
             document.addEventListener("keydown", function (event) {
-                if (event.keyCode == 32 && !playing) {        
-                    playing =true;         
-                    gameOver = false; 
-                    document.querySelector('#press').innerHTML='';
+                if (event.keyCode == 32 && !playing) {
+                    playing = true;
+                    gameOver = false;
+                    document.querySelector('#press').innerHTML = '';
                     document.querySelector('#gameOverText').style.display = 'none'; // 게임이 재시작될 때 숨깁니다.        
                     clearInterval(interval)
                     seconds = 0;
@@ -371,7 +394,46 @@
                 }
             });
         }
-     
+
+        async function sendObj() {
+            const data = {
+                uiNum: '[[${session.user.uiNum}]]',
+                giNum: '[[${param.giNum}]]',
+                piPoint: seconds
+            }
+            console.log(data)
+            const json = JSON.stringify(data);
+            const res = await fetch(`/game-infos`, {
+                method: "POST",
+                body: json,
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+            });
+            const msg = await res.json();
+            alert(msg.msg);
+        }
+
+        window.addEventListener('load', async function () {
+            const res = await fetch('/point-infos/max?giNum=2');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
+            const point = await res.json();
+            document.querySelector('#bestScoreValue').innerHTML = point.piPoint;
+
+            const rankRes = await fetch('/point-infos/rank?giNum=2');
+            const users = await rankRes.json();
+            let html = '';
+            let i = 1;
+            for(const user of users){
+                html += '<tr>';
+                html += `<td>${i}</td>`;
+                html += `<td>${user.uiId}</td>`;
+                html += `<td>${user.piPoint}</td>`;
+                html += '</tr>';
+                i++;
+            }
+            document.querySelector('#tBody').innerHTML = html;
+        })
+
         startButtonListener();
 
 

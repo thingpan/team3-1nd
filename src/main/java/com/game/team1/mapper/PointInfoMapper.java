@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.game.team1.vo.PointInfoVO;
 
+
 public interface PointInfoMapper {
     int insertPointInfo(PointInfoVO point);
 
