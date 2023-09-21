@@ -29,6 +29,11 @@
             const point = await res.json();
             document.querySelector('#maxScore1').innerHTML=point.piPoint;
         })
+        window.addEventListener('load',async function(){
+            const res = await fetch('/point-infos/max?giNum=2');//giNum을 일단 하드코딩 한건데 저걸 받아와서 게임마다 다르게 해야함
+            const point = await res.json();
+            document.querySelector('#maxScore2').innerHTML=point.piPoint;
+        })
     </script>
 </body>
 </html>
