@@ -59,16 +59,25 @@
         #bestScore {
             font-family: 'DotGothic16', sans-serif;
             color: white;
+            font-size: 40px;
         }
 
         #bestScoreValue {
             font-family: 'DotGothic16', sans-serif;
             color: white;
+            font-size: 40px;
         }
-        table{
+
+        table {
             border-color: white;
             font-family: 'DotGothic16', sans-serif;
             color: white;
+            width: 300px;
+            height: 300px;
+        }
+        #canvasDiv{
+            display: flex;
+            justify-content: center;
         }
     </style>
     <audio id="bgm" preload="auto">
@@ -81,26 +90,35 @@
         <source th:src="@{/bgm/gameover.mp3}" type="audio/mpeg">
     </audio>
 </head>
-<body>
-    <span id="bestScore">My Best Score</span><br>
-    <span id="bestScoreValue"></span>
-    <div id="canvasDiv" style="text-align: center;">
-        <canvas id="gameCanvas" style="display: inline;"></canvas>
-    </div>
-    <div id="timer">Press the Spacebar</div>
-    <div id="press"></div>
-    <div>
-        <table border="1" >
-            <tr>
-                <th>Rank</th>
-                <th>ID</th>
-                <th>Score</th>
-            </tr>
-            <tbody id="tBody">
 
-            </tbody>
-        </table>
+<body>
+    <div id="canvasDiv">
+
+        <div style="float: left;margin-right: 80px;">
+            <span id="bestScore">My Best Score</span><br>
+            <span id="bestScoreValue"></span>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="gameCanvas"></canvas>
+            <div id="timer">Press the Spacebar</div>
+            <div id="press"></div>
+        </div>
+        <div style="display: inline;margin-left: 80px;">
+            <table border="1">
+                <tr>
+                    <th>Rank</th>
+                    <th>ID</th>
+                    <th>Score</th>
+                </tr>
+                <tbody id="tBody">
+
+                </tbody>
+            </table>
+        </div>
     </div>
+
+
     <script>
         let gameOver = false;
         let playing = false;
@@ -423,7 +441,7 @@
             const users = await rankRes.json();
             let html = '';
             let i = 1;
-            for(const user of users){
+            for (const user of users) {
                 html += '<tr>';
                 html += `<td>${i}</td>`;
                 html += `<td>${user.uiId}</td>`;
