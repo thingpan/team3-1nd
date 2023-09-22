@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.team1.service.UserInfoService;
@@ -43,13 +44,13 @@ public class UserInfoController {
         if(loginUser!=null){
             session.setAttribute("user", loginUser);
             msg.setMsg("로그인이 성공하였습니다.");
-            msg.setUrl("/");
+            msg.setUrl("/tmpl/user-info/index");
             msg.setSuccess(true);
         }
         return msg;
     }
 
-    @PostMapping("/user-infos")
+    @PostMapping("/user-infos") 
     public MsgVO join(@RequestBody UserInfoVO user, MsgVO msg, HttpSession session){
         int result = userService.insertUserInfo(user);
         msg.setMsg("Join Failed");

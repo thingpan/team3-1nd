@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 폼</title>
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     <style>
         html {
             height: 100%;
@@ -21,7 +24,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 400px;
+            width: 1000px;
+            height: 500px;
             padding: 40px;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, .5);
@@ -184,54 +188,41 @@
                 bottom: 100%;
             }
         }
+
+        #gameText {
+            font-family: 'DotGothic16', sans-serif;
+            color: white;
+            text-align: center;
+            font-size: 100px;
+        }
+
+        .helloText {
+            color: white;
+            text-align: center;
+            font-size: 80px;
+        }
     </style>
 </head>
 
-<body>
-    <div class="login-box">
-        <h2>로그인</h2>
-        <div class="user-box">
-            <input type="text" name="uiId" id="uiId" required="">
-            <label>UserId</label>
-        </div>
-        <div class="user-box">
-            <input type="password" name="uiPwd" id="uiPwd" required="">
-            <label>Password</label>
-        </div>
-        <a onclick="login()">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Sign In</a>
-        <a href="/tmpl/user-info/insert" style="margin-left: 50px;">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Sign Up</a>
-    </div>
-    <script>
-        async function login() {
-            const json = JSON.stringify({
-                uiId: document.querySelector('#uiId').value,
-                uiPwd: document.querySelector('#uiPwd').value,
-            });
 
-            const res = await fetch('/login', {
-                method: 'POST',
-                body: json,
-                headers: {
-                    'Content-Type': 'application/json;charset=UTF-8'
-                }
-            })
-            const msg = await res.json();
-            alert(msg.msg);
-            if (msg.url) {
-                location.href = msg.url;
-            }
-        }
-    </script>
+<body>
+    <div id="gameText">
+        GAME LAND
+    </div>
+    <div class="login-box">
+        <span class="helloText" th:text="${session.user.uiName}"></span><span class="helloText">! Hi ._.</span><br>
+        <div style="float: left;">
+            <img src="../.././imgs/red.png" style="background-color: transparent;  margin-left: 200px;">
+            <a href="/tmpl/main?giNum=1">두더지 잡기</a>
+        </div>
+        <div>
+            <img src="../.././imgs/index-UFO.png" style="background-color: transparent; width: 200px; height: 200px;margin-left: 100px;">
+            <a href="/tmpl/game?giNum=2">운석 피하기</a>
+        </div>
+        <!-- <div> <a href="/tmpl/main?giNum=1" style="float: right;">두더지 잡기</a></div>
+        <div><a href="/tmpl/game?giNum=2">총알 피하기</a></div> -->
+        <ul></ul>
+    </div><br>
 </body>
 
 </html>

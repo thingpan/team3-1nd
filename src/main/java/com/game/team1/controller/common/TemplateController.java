@@ -11,6 +11,6 @@ public class TemplateController {
 
     @GetMapping("/")
     public String home(){
-        return "index";
+        return "/tmpl/user-info/login";
     }
 }
