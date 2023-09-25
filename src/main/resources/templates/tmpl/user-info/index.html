@@ -211,14 +211,19 @@
     </div>
     <div class="login-box">
         <span class="helloText" th:text="${session.user.uiName}"></span><span class="helloText">! Hi ._.</span><br>
-        <div style="float: left;">
-            <img src="../.././imgs/red.png" style="background-color: transparent;  margin-left: 200px;">
-            <a href="/tmpl/main?giNum=1">두더지 잡기</a>
-        </div>
+
+        <div class="card" style="width: 18rem; background-color: #243b55;" >
+            <img src="../.././imgs/red.png" class="card-img-top" alt="..."  >
+            <div class="card-body">
+              <p class="card-text" style="color: white;">색깔과 맞는 두더지를 선택해 점수를 얻으세요!!</p>
+              <a href="/tmpl/main?giNum=1" class="btn btn-primary">두더지 잡기</a>
+            </div>
+          </div>
         <div>
             <img src="../.././imgs/index-UFO.png" style="background-color: transparent; width: 200px; height: 200px;margin-left: 100px;">
             <a href="/tmpl/game?giNum=2">운석 피하기</a>
         </div>
+        
         <!-- <div> <a href="/tmpl/main?giNum=1" style="float: right;">두더지 잡기</a></div>
         <div><a href="/tmpl/game?giNum=2">총알 피하기</a></div> -->
         <ul></ul>
