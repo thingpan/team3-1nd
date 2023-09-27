@@ -199,7 +199,7 @@
         .helloText {
             color: white;
             text-align: center;
-            font-size: 80px;
+            font-size: 40px;
         }
     </style>
 
@@ -234,11 +234,11 @@
       
       $(".UFO").hover(function() {
     
-        $(this).find("img").attr("src", "../.././imgs/boom.png");
+        $(this).find("img").attr("src", "../.././imgs/index-boom.png");
         
       }, function() {
     
-        $(this).find("img").attr("src", "../.././imgs/UFO.png");
+        $(this).find("img").attr("src", "../.././imgs/index-UFO.png");
       });
   
  
@@ -258,13 +258,13 @@
         <div class="hover-image" data-url="/tmpl/main?giNum=1" style="width: 200px; height: 200px;  text-align: center; cursor: pointer;">
             <img src="../.././imgs/red.png" alt="..." style="width: 100%; height: 100%;">
             <p style="color: white;">색깔과 맞는 두더지를 선택해 점수를 얻으세요!!</p>
-            <a href="/tmpl/main?giNum=1" style="color: white; text-decoration: none;">두더지 잡기</a>
+            <a href="/tmpl/main?giNum=1" >두더지 잡기</a>
           </div>
           
           
           <div style="display: flex; justify-content: flex-end; margin-top :-200px;">
             <div class="UFO" data-url="/tmpl/game?giNum=2" style="width: 200px; height: 200px; text-align: center; cursor: pointer;">
-                <img src="../.././imgs/UFO.png" style="background-color: transparent; width: 200px; height: 200px;">
+                <img src="../.././imgs/index-UFO.png" style="background-color: transparent; width: 200px; height: 200px;">
                 <p style="color: white;">운석을 피해서 점수를 얻으세영!!</p>
                 <a href="/tmpl/game?giNum=2">운석 피하기</a>
             </div>
