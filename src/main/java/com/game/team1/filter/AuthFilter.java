@@ -30,10 +30,10 @@ public class AuthFilter extends GenericFilterBean {
 	{
 		execludeUrls.add("/tmpl/user-info/login");
         execludeUrls.add("/tmpl/user-info/insert");
-        execludeUrls.add("/tmpl/user-info/insert");
 		execludeUrls.add("/");
         execludeUrls.add("/login");
         execludeUrls.add("/insert");
+		execludeUrls.add("/user-infos"); 
 	}
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -51,5 +51,5 @@ public class AuthFilter extends GenericFilterBean {
 		}
         chain.doFilter(request, response);
 	}
-
+ 
 }
