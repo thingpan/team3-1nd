@@ -11,7 +11,7 @@
 
 ### 사용기술 또는 언어 
 |------|---|
-[JAVA_SCRIPT | 언어|
+|JAVA_SCRIPT | 언어|
 |HTML, CSS, JS | 웹 페이지 구현|
 |MariaDB|데이터베이스 구축|
 
