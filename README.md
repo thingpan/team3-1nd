@@ -11,7 +11,7 @@
 
 ## 작품 개발환경
 
-ERD:
+ERD:<img width="50%" src="https://3nd-team3.s3.ap-northeast-2.amazonaws.com/upload/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7+2024-02-20+152556.png"/>
 
 핵심기능:
 
